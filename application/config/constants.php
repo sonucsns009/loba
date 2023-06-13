@@ -84,8 +84,8 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-define('TOKEN', md5('De$E0S#s@W#Y$$#')); //d02c6f83ae2cad686520ce00cad42b91
+define('TOKEN', md5('Lo$B0A#s@W#Y$$#')); //cc665348c9918319f4367145f7f48773
 define('POSTLIMIT', 25); //
 define('TBPREFIX',"loba_");
 define('REMAINING_TIME', 10);
-define('DEFAULT_TIME_ZONE', 'Atlantic/Canary (UTC+0)');//Atlantic/Canary
+define('DEFAULT_TIME_ZONE', 'Atlantic/Canary');//Atlantic/Canary
