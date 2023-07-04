@@ -5,15 +5,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Deseos Admin Section.">
+    <meta name="description" content="LOBA Admin Section.">
      
     <link rel="icon" href="<?php echo base_url();?>template/front/images/logo-small.png" type="image/x-icon">
    <!-- <link rel="shortcut icon" href="<?php echo base_url('template/admin/');?>assets/images/dashboard/favicon.png" type="image/x-icon"> -->
     
 	<title>LOBA | <?php echo	$title;?></title>
-	<meta name="keywords" content="Deseos Admin Section" />
-	<meta name="description" content="Deseos Admin Section">
-	<meta name="author" content="Deseos">
+	<meta name="keywords" content="LOBA Admin Section" />
+	<meta name="description" content="LOBA Admin Section">
+	<meta name="author" content="LOBA">
      <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
@@ -47,7 +47,7 @@
 	<style>.err_msg{ color:red;}</style>
 </head>
 
-<body onload="getNotification()">
+<body>
 
 <!-- page-wrapper Start-->
 <div class="page-wrapper">
@@ -58,7 +58,7 @@
             <div class="main-header-left d-lg-none" style="background-color: #dddddd;border: solid #75299d 5px;">
                 <div class="logo-wrapper" style="padding: 5px;">
                    <a href="<?php echo base_url();?>backend/dashboard">
-                        <img class="blur-up lazyloaded" src="<?php echo base_url('template/admin/');?>assets/images/logos/loba.webp" alt="Deseos logo">
+                        <img class="blur-up lazyloaded" src="<?php echo base_url('template/admin/');?>assets/images/logos/loba.webp" alt="LOBA logo">
                     </a>			
                 </div>
             </div>
@@ -97,12 +97,14 @@
                       <!--   </ul>
                     </li> -->
                     <li style="display:none"><a href="#"><i class="right_side_toggle" data-feather="message-square"></i><span class="dot"></span></a></li>
-                    <li class="onhover-dropdown">
-                        <div class="media align-items-center"><img class="align-self-center pull-right img-50 rounded-circle blur-up lazyloaded" src="<?php echo base_url('template/admin/');?>assets/images/avatar.jpg" alt="header-user">
+                    <li class="onhover-dropdown"> 
+                        <div class="media align-items-center">
+                            <img class="align-self-center pull-right img-40 rounded-circle blur-up lazyloaded" src="<?php echo base_url('template/admin/');?>assets/images/avatar.jpg" alt="header-user">
                             <!--<div class="dotted-animation"><span class="animate-circle"></span><span class="main-circle"></span></div>-->
+                           
                         </div>
                         <ul class="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
-							<li><a href="<?php echo base_url();?>backend/Admin/updateprofile"><i data-feather="user"></i>Update Profile</a></li>
+							<li><a href="<?php echo base_url();?>backend/Dashboard/updateprofile"><i data-feather="user"></i>Update Profile</a></li>
                            <!--<li><a href="#"><i data-feather="mail"></i>Inbox</a></li>
                             <li><a href="#"><i data-feather="lock"></i>Lock Screen</a></li>
                             <li><a href="#"><i data-feather="settings"></i>Settings</a></li>-->

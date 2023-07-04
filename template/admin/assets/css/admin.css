@@ -30521,11 +30521,11 @@ a:hover {
 
   .tab2-card .nav-tabs .nav-link.active, .tab2-card .nav-tabs .nav-link:focus, .tab2-card .nav-tabs .nav-link:hover {
 
-    color: #ff6161;
+    color: #aa4ff6;
 
     border-color: transparent;
 
-    border-bottom: 2px solid #ff6161; }
+    border-bottom: 2px solid #aa4ff6; }
 
 
 
@@ -31917,7 +31917,7 @@ div.dataTables_wrapper div.dataTables_paginate {
 
    /* background-color: #018e30; */
    
-	background-color: #75299d;
+	background-color: #aa4ff6;
 
     border-bottom: none;
 
@@ -32160,7 +32160,7 @@ ul {
 
 * a {
 
-  color: #ff6161; }
+  color: #aa4ff6; }
 
 
 
@@ -32373,7 +32373,7 @@ input:focus {
 
 .page-wrapper .page-main-header {
 
-  background-color: #75299d;
+  background-color: #fff;
 
   height: 80px;
 
@@ -33025,7 +33025,7 @@ input:focus {
 
           .page-main-header .main-header-right .nav-right .profile-dropdown li:hover a {
 
-            color: #ff6161;
+            color: #aa4ff6;
 
             -webkit-transition: 0.3s;
 
@@ -33033,11 +33033,11 @@ input:focus {
 
             .page-main-header .main-header-right .nav-right .profile-dropdown li:hover a svg {
 
-              color: #ff6161 !important; }
+              color: #aa4ff6 !important; }
 
               .page-main-header .main-header-right .nav-right .profile-dropdown li:hover a svg path, .page-main-header .main-header-right .nav-right .profile-dropdown li:hover a svg line, .page-main-header .main-header-right .nav-right .profile-dropdown li:hover a svg polyline {
 
-                color: #ff6161 !important; }
+                color: #aa4ff6 !important; }
 
           .page-main-header .main-header-right .nav-right .profile-dropdown li a {
 
@@ -33216,7 +33216,7 @@ ul.notification-dropdown.onhover-show-div {
   -webkit-box-shadow: 0 0 11px rgba(143, 164, 232, 0.08);
 
   box-shadow: 0 0 11px rgba(143, 164, 232, 0.08); 
-  background: #dddddd;
+  background: #3c4b64;
   }
 
 
@@ -33227,7 +33227,7 @@ ul.notification-dropdown.onhover-show-div {
 
   position: fixed;
 
-  background: #75299d;
+  background: #3c4b64;
 
   top: 0;
 
@@ -33262,6 +33262,7 @@ ul.notification-dropdown.onhover-show-div {
     background-color: transparent;
 
     z-index: 10;
+    border-bottom: 1px solid #2e3a4c;
 
     -webkit-box-shadow: -3px 1px 3px 1px rgba(68, 102, 242, 0.1);
 
@@ -33283,10 +33284,12 @@ ul.notification-dropdown.onhover-show-div {
 
       -ms-flex-align: center;
 
-      align-items: center; }
+      align-items: center; 
+      justify-content: center;
+    }
 
   .page-wrapper .page-body-wrapper .page-sidebar .main-header-left .logo-wrapper a img{
-    width: 230px;
+    max-width: 130px;
     
   } 
 
@@ -33350,9 +33353,9 @@ ul.notification-dropdown.onhover-show-div {
 
       font-weight:400;
 
-      color: #000000;
+      color: #fff;
       padding-left: 10px;
-      border-bottom: solid 1px #75299d;
+      border-bottom: solid 1px #2e3a4c;
        }
 
       .page-wrapper .page-body-wrapper .page-sidebar .sidebar-menu .sidebar-header svg {
@@ -33393,7 +33396,7 @@ ul.notification-dropdown.onhover-show-div {
 
       .page-wrapper .page-body-wrapper .page-sidebar .sidebar-menu > li > a:hover {
 
-        background-color: #75299d;
+        background-color: #AA4FF6;
         color: #fff;
         padding-left: 3px;
 
@@ -35345,9 +35348,9 @@ ul.notification-dropdown.onhover-show-div {
 
 /*======= Background-color css starts  ======= */
 
-.bg-primary {
+.authentication-box .bg-primary {
 
-  background-color: #ff6161 !important;
+  background-color: #F4F7FF !important;
 
   color: #ffffff; }
 
@@ -35417,14 +35420,20 @@ ul.notification-dropdown.onhover-show-div {
 
 /*======= Button-color css starts  ======= */
 
-.btn-primary {
+#frm_login .btn-primary {
 
-  background-color: #dddddd !important;
+  background-color: #1C1C1E !important;
 
-  border-color: #dddddd !important;
-  color:#000;
+  border-color: #1C1C1E !important;
+  color:#fff;
    }
+   .btn-primary {
 
+    background-color: #fff !important;
+  
+    border-color: #fff !important;
+    color:#000;
+     }
   .btn-primary.disabled {
 
     background-color: #ff6161 !important;
@@ -38417,7 +38426,7 @@ table tbody .border-bottom-warning td {
 
     .authentication-box .container .bg-primary {
 
-      padding: 52px;
+      padding: 23px;
 
       background-image: url("../images/dashboard/login-bg.png");
 
@@ -38461,7 +38470,7 @@ table tbody .border-bottom-warning td {
 
     .authentication-box .container h3 {
 
-      color: #ffffff;
+      color: #000000;
 
       font-weight: 600;
 
@@ -48420,4 +48429,17 @@ body.rtl .account-setting {
   .de-icon {
     padding:15px;
   }
+}
+
+
+
+.custom-btn {
+  background-color: #3c4b64 !important;
+  color: #fff;
+  border: 1px solid #3c4b64;
+}
+.custom-btn:hover {
+  background-color: #aa4ff6 !important;
+  color: #fff;
+  border: 1px solid #aa4ff6;
 }

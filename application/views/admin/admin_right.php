@@ -13,12 +13,12 @@
 #echo $this->db->last_query();
  #echo '<pre>';print_r($modulesId);exit;
 ?>
-#b609e1
+
         <div class="page-sidebar" style="width:270px;">
-            <div class="main-header-left d-none d-lg-block" style="background-color: #dddddd;border: solid #75299d 5px;">
+            <div class="main-header-left d-none d-lg-block" >
                 <div class="logo-wrapper" style="padding: 5px;">
                 	<a href="<?php echo base_url();?>backend/dashboard">
-                		<img class="blur-up lazyloaded" src="<?php echo base_url('template/admin/');?>assets/images/logos/loba.webp" alt="Deseos logo">
+                		<img class="blur-up lazyloaded" src="<?php echo base_url('template/admin/');?>assets/images/logos/loba_logo_1.png" alt="LOBA logo">
                 	</a>
                 </div>
             </div>
@@ -26,53 +26,21 @@
                
                 <ul class="sidebar-menu">
                    
-					 <li <?php if($this->router->fetch_class()=='dashboard'){?>style="background-color: rgb(255, 97, 97);"<?php }?>class="  <?php if($this->router->fetch_method()=='dashboard'){?>nav-expanded nav-active <?php }?>" <?php if(isset($modulesId)&& count($modulesId)>0)
-							{ 
-								if ($modulesId[0]['view'] == 'Yes') 
-								{ 
-									echo 'style="display:block;"';
-							    } 
-								else 
-								{ 
-									echo 'style="display:none;"'; 
-								}
-							}
-							?>>
-						<a class="sidebar-header" href="<?php echo base_url("backend/");?>dashboard"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/dashboard.png"?>" style="max-height: 30px;max-width: 30px;"> &nbsp;&nbsp;<span>DASHBOARD</span></a>                        
-					</li>
-					<!--<li class=" <?php if($this->router->fetch_method()=='manageUsers'){?>nav-expanded nav-active <?php }?>">
-						<a class="sidebar-header" href="<?php //echo base_url("backend/");?>dashboard"><i data-feather="file-text"></i><span>ANALYTICS & REPORTS</span></a>                        
-					</li>-->
-					<li  <?php if($this->router->fetch_class()=='Services'){?>style="background-color: #75299d; color: #fff;"<?php }?>class=" <?php if($this->router->fetch_method()=='manageService'){?>nav-expanded nav-active <?php }?>"<?php if(isset($modulesId)&& count($modulesId)>0)
-							{ 
-								if ($modulesId[1]['view'] == 'Yes') 
-								{ 
-									echo 'style="display:block;"';
-							    } 
-								else 
-								{ 
-									echo 'style="display:none;"'; 
-								}
-							}
-							?>>
-						<a class="sidebar-header" href="<?php echo base_url("backend/");?>Services/manageService"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/categories.png"?>" style="max-height: 30px;max-width: 30px;">  &nbsp;&nbsp;<span <?php if($this->router->fetch_class()=='Services'){?>style="color: #fff;"<?php }?>>SERVICES</span></a>                        
+					 <li <?php if($this->router->fetch_class()=='Dashboard'){?>style="background-color: #AA4FF6; color: #fff;"<?php }?>class="  <?php if($this->router->fetch_method()=='dashboard'){?>nav-expanded nav-active <?php }?>">
+						<a class="sidebar-header" href="<?php echo base_url("backend/");?>Dashboard"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/Dashboard-icon.png"?>" style="max-height: 30px;max-width: 30px;"> &nbsp;&nbsp;<span>DASHBOARD</span></a>                        
 					</li>
 					
-				
+					<li  <?php if($this->router->fetch_class()=='Services'){?>style="background-color: #AA4FF6; color: #fff;"<?php }?>class=" <?php if($this->router->fetch_method()=='manageService'){?>nav-expanded nav-active <?php }?>"
+							>
+						<a class="sidebar-header" href="<?php echo base_url("backend/");?>Services/manageService"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/manager.png"?>" style="max-height: 30px;max-width: 30px;">  &nbsp;&nbsp;<span <?php if($this->router->fetch_class()=='Services'){?>style="color: #fff;"<?php }?>>SERVICES</span></a>                        
+					</li>
 					
-					<li <?php if($this->router->fetch_class()=='Banner'){?>style="background-color: rgb(255, 97, 97);"<?php }?>class=" <?php if($this->router->fetch_method()=='manageBanners'){?>nav-expanded nav-active <?php }?>" <?php if(isset($modulesId)&& count($modulesId)>0)
-							{ 
-								if ($modulesId[21]['view'] == 'Yes') 
-								{ 
-									echo 'style="display:block;"';
-							    } 
-								else 
-								{ 
-									echo 'style="display:none;"'; 
-								}
-							}
-							?>>
-						<a class="sidebar-header" href="<?php echo base_url();?>backend/Banner/manageBanners"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/Banners .png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>BANNERS</span></a>                        
+					<li <?php if($this->router->fetch_class()=='Doctors'){?>style="background-color: #AA4FF6; color: #fff;"<?php }?>class=" <?php if($this->router->fetch_method()=='manageDoctor'){?>nav-expanded nav-active <?php }?>">
+						<a class="sidebar-header" href="<?php echo base_url();?>backend/Doctors/manageDoctor"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/doctors.png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>DOCTORS</span></a>                        
+					</li>
+
+					<li <?php if($this->router->fetch_class()=='Nurse'){?>style="background-color: #AA4FF6; color: #fff;"<?php }?>class=" <?php if($this->router->fetch_method()=='manageNurse'){?>nav-expanded nav-active <?php }?>">
+						<a class="sidebar-header" href="<?php echo base_url();?>backend/Nurse/manageNurse"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/nurse.png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>NURSES</span></a>                        
 					</li>
 					
 					
@@ -81,7 +49,7 @@
                  </ul>
             </div>
         </div>
-
+<br>
         <!-- Page Sidebar Ends-->
 
         

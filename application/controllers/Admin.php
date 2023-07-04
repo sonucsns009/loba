@@ -24,4 +24,6 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/dashboard');
 		$this->load->view('admin/admin_footer');
 	}
+
+	
 }

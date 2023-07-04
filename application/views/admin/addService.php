@@ -21,7 +21,7 @@
 							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 							<?php echo $this->session->flashdata('error');?>
 						</div>
-						<?php }?>
+						<?php } ?>
 						<?php if($this->session->flashdata('error_msg')!=""){?>
 						<div class="alert alert-danger">
 							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -95,6 +95,9 @@
 	                                                <label for="paytype" ><span>*</span> Price & Payment</label>
 	                                                <select class="form-control" name="paytype" id="paytype">
 	                                                	<option value="">-Select-</option>
+														<option value="Per Session">Per Session</option>
+	                                                	<option value="with a plan">with a plan</option>
+	                                                	<option value="per session or with a plan">per session or with a plan</option>
 	                                                </select>
 													<div class="err_msg" id="err_paytype"></div>
 												</div>
@@ -102,6 +105,9 @@
 	                                                <label for="paytype_ch" ><span>*</span> Price & Payment (Chinese)</label>
 	                                                <select class="form-control" name="paytype_ch" id="paytype_ch">
 	                                                	<option value="">-Select-</option>
+														<option value="Per Session">Per Session</option>
+	                                                	<option value="with a plan">with a plan</option>
+	                                                	<option value="per session or with a plan">per session or with a plan</option>
 	                                                </select>
 													<div class="err_msg" id="err_paytype_ch"></div>
 												</div>
@@ -111,6 +117,7 @@
 	                                                <label for="pricetype" ><span>*</span> Price Type</label>
 	                                                <select class="form-control" name="pricetype" id="pricetype">
 	                                                	<option value="">-Select-</option>
+                                                        <option value="Fixed Price">Fixed Price</option>
 	                                                </select>
 													<div class="err_msg" id="err_pricetype"></div>
 												</div>
@@ -118,6 +125,7 @@
 	                                                <label for="pricetype_ch" ><span>*</span> Price & Payment (Chinese)</label>
 	                                                <select class="form-control" name="pricetype_ch" id="pricetype_ch">
 	                                                	<option value="">-Select-</option>
+                                                        <option value="Fixed Price">Fixed Price</option>
 	                                                </select>
 													<div class="err_msg" id="err_pricetype_ch"></div>
 												</div>
@@ -163,6 +171,7 @@
 	                                                <label for="payment_preferences" ><span>*</span> Payment Preferences</label>
 	                                                <select class="form-control" name="payment_preferences" id="payment_preferences">
 	                                                	<option value="">-Select-</option>
+	                                                	<option value="Entire amount either online or in person">Entire amount either online or in person </option>
 	                                                </select>
 													<div class="err_msg" id="err_payment_preferences"></div>
 												</div>
@@ -170,37 +179,38 @@
 	                                                <label for="payment_preferences_ch" ><span>*</span> Payment Preferences (Chinese)</label>
 	                                                <select class="form-control" name="payment_preferences_ch" id="payment_preferences_ch">
 	                                                	<option value="">-Select-</option>
+														<option value="全部金额在线或亲自">全部金额在线或亲自</option>
 	                                                </select>
 													<div class="err_msg" id="err_payment_preferences_ch"></div>
 												</div>
                                             </div>
 
                                              <div class="form-group row">
-											  	<div class="col-sm-12">
+											  	<div class="col-sm-6">
 	                                                <label for="video_conf" ><span>*</span> Video Conferencing</label>
-	                                               
+													<div class="form-group row">
+														<div class="col-sm-3">
+															<label> <input type="radio" name="video_conference" value="YES">  
+															YES </label>  
+														</div>
+														<div class="col-sm-3">
+															<label> <input type="radio" name="video_conference" value="NO">  
+															NO </label>  
+														</div>
+													</div>
 												</div>
-
+												
                                             </div>
-                                             <div class="form-group row">
-											  	<div class="col-sm-2">
-													 <input type="radio" id="defaultRadio" name="example2">  
-    												<label for="defaultRadio"> Transgender </label>  
-											  	</div>
-											  	<div class="col-sm-2">
-													 <input type="radio" id="defaultRadio" name="example2">  
-    												<label for="defaultRadio"> Transgender </label>  
-											  	</div>
-											  </div>
+											
                                     </div>
 									
 									
                                 </div>
                                 <div class="pull-right">
-                                    <button type="submit" class="btn btn-primary"  name="btn_addslider" id="btn_addslider">
+                                    <button type="submit" class="btn btn-primary custom-btn"  name="btn_save_service" id="btn_addslider">
 									Add</button>
 									
-									   <a  class="btn btn-primary"  href="<?php echo base_url();?>backend/Banner/manageBanners">
+									   <a  class="btn btn-primary custom-btn"  href="<?php echo base_url();?>backend/Services/manageService">
 									Cancel</a>
                                 </div></form>
                             </div>

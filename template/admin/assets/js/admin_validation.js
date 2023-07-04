@@ -104,21 +104,10 @@ function order_change(order_id,order_status,user_type,admin_id,customer_id)
 
 function chk_isDeleteComnfirm()
 {
-
-
-
 	if(confirm("Are you really want to delete record?"))
 
-
-
 		return true;
-
-
-
 	else
-
-
-
 		return false;
 
 

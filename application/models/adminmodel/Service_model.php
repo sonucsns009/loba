@@ -7,71 +7,59 @@ Class Service_model extends CI_Model {
 	}
 	
 	
-	public function check_adminexists($admin_email,$username,$adminId="")
+	public function check_serviceexists($services_title)
 	{
-		if($adminId> 0)
-			$query="SELECT admin_id FROM ".TBPREFIX."admin WHERE (admin_email = '$admin_email' OR username ='$username') AND admin_id != $adminId"; 
-		else
-			$query="SELECT admin_id FROM ".TBPREFIX."admin WHERE (admin_email = '$admin_email' OR username ='$username') "; 
+		$query="SELECT service_id FROM ".TBPREFIX."main_services WHERE service_name ='". $services_title."'"; 
 		$sts = $this->db->query($query);
 		return $sts->num_rows();
 	}
 	// Read data using username and password
 	
-	
-	# Add Admin Details  
-	public function add_admin($input_data) 
-	{
-		$res	=	$this->db->insert(TBPREFIX.'admin',$input_data);
-		if($res)
-		{
-			$fdbrd_admin_id=$this->db->insert_id();
-			return $fdbrd_admin_id;
-		}
-		else
-		return false;
-	}
-	
-	# Update Admin Details 
-	public function upt_admin($input_data,$admin_id)
-	{
-		$this->db->where('admin_id',$admin_id);
-		$query=$this->db->update(TBPREFIX."admin",$input_data);
-		if($query==1)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}	
-	}
-	
-	
 	public function getAllServices()
 	{
-		$this->db->select(TBPREFIX.'main_services.*,'.TBPREFIX.'main_services_ch.service_name as service_name_ch,'.TBPREFIX.'main_services_ch.service_description as service_description_ch');
-		$this->db->from(TBPREFIX.'main_services');
-		$this->db->join(TBPREFIX.'main_services_ch',TBPREFIX.'main_services_ch.service_id = '.TBPREFIX.'main_services.service_id');
+		$ch=',ch.service_tagline as service_tagline_ch,
+		ch.service_tagline as service_tagline_ch,
+		ch.paytype as paytype_ch,
+		ch.pricetype as pricetype_ch,
+		ch.amount as amount_ch,
+		ch.duration as duration_ch,
+		ch.buffer_time as buffer_time_ch,
+		ch.payment_preferences as payment_preferences_ch';
+		
+		$this->db->select('ms.*,ch.service_name as service_name_ch,ch.service_description as service_description_ch'.$ch);
+		$this->db->from(TBPREFIX.'main_services as ms');
+		$this->db->join(TBPREFIX.'main_services_ch as ch','ch.service_id = ms.service_id','left');
 		#$this->db->where('user_type',"Company");
 		$res=$this->db->get();
 		return $tsr=$res->result_array();
 	}
-	
-	public function getAdminInfo()
+
+	public function getServiceInfo()
 	{
-		$this->db->select(TBPREFIX.'admin.*');
-		$res=$this->db->get(TBPREFIX.'admin');
+		$this->db->select(TBPREFIX.'main_services.*');
+		$res=$this->db->get(TBPREFIX.'main_services');
 		return $tsr=$res->result_array();
 	}
 	
 	
 	// Read data using username and password
-	public function getAdminDetails($admin_id,$qty) 
+	public function getServiceDetails($service_id,$qty) 
 	{
 		$this->db->select('*');
-		$this->db->from(TBPREFIX.'admin');
-		$this->db->where('admin_id',$admin_id);
+		$this->db->from(TBPREFIX.'main_services');
+		$this->db->where('service_id',$service_id);
+		$query = $this->db->get();
+		if($qty==1)
+			return $query->result_array();
+		else
+			return $query->num_rows();
+	}
+
+	public function getServiceDetails_ch($service_id,$qty) 
+	{
+		$this->db->select('*');
+		$this->db->from(TBPREFIX.'main_services_ch');
+		$this->db->where('service_id',$service_id);
 		$query = $this->db->get();
 		if($qty==1)
 			return $query->result_array();
@@ -79,7 +67,7 @@ Class Service_model extends CI_Model {
 			return $query->num_rows();
 	}
 	
-	public function checkAdminPassword($old_password,$admin_id)
+	public function checkServicePassword($old_password,$admin_id)
 	{
 		$this->db->select('admin_id');
 		$this->db->from(TBPREFIX.'admin');
