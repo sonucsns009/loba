@@ -35,11 +35,6 @@ class Login extends REST_Controller {
 					$result = $this->LoginModel->chk_login($data,1);
 					$status = $result->status_flag;
 					$otp_verified = $result->otp_verified;	
-
-					//*** FCM Update */
-					$updatedata=array('user_fcm'=> $fcm,'user_language'=>$language);
-					$q=$this->Common_Model->update_data('users','user_id',$result->user_id,$updatedata);
-					//*********** */
 					
 					if($status == 'Active')
 					{
@@ -51,9 +46,21 @@ class Login extends REST_Controller {
 							'status_flag' => $result->status_flag);
 						
 						//$this->session->set_userdata('logged_in', $session_data);
+						// Send OTP
+						$otp_code = $this->Common_Model->otp();
+						$strMessage=urlencode("Dear user your CSNS Login OTP for LOBA is $otp_code");
+						//$output=$this->Common_Model->SendSms($strMessage, $mobile_number);	
+						$response_array['OTP'] = $otp_code;
+
+						//*** User Update */
+						$updatedata=array('user_fcm'=> $fcm,'user_language'=>$language,'otp'=>$otp_code);
+						$q=$this->Common_Model->update_data('users','user_id',$result->user_id,$updatedata);
+						//*********** */
+
 						$response_array['data'] = $session_data;
 						$response_array['responsecode'] = "200";
-						$response_array['responsemessage'] = 'You are logged in successfully.';
+						$response_array['responsemessage'] = 'OTP send successfully.';
+						//$response_array['responsemessage'] = 'You are logged in successfully.';
 					}
 					else  if($status=='Inactive')
 					{
@@ -88,7 +95,131 @@ class Login extends REST_Controller {
 		$response = json_encode($obj);
 		print_r($response);
 	}
-	
+
+	public function confirmotp_post()
+	{
+		$token 		  = $this->input->post("token");
+		$user_id	  = $this->input->post('user_id');
+		$otp          = $this->input->post('otp');
+		
+		if($token == TOKEN)
+		{
+			$data = array('user_id' => $this->input->post('user_id')
+						,'otp' => $this->input->post('otp'));
+
+			$isLogin = $this->LoginModel->check_user($user_id);
+		
+			if ($isLogin > 0) 
+			{
+				$loginData = $this->LoginModel->chk_otp($data,0);
+
+				if ($loginData > 0) 
+				{
+					$result = $this->LoginModel->chk_otp($data,1);
+ 					
+						$session_data = array(
+							'user_id' => $result->user_id,
+							'full_name' => $result->full_name,
+							'mobile' => $result->mobile,
+							'email' => $result->email,
+							'status_flag' => $result->status_flag);
+						
+						$response_array['data'] = $session_data;
+						$response_array['responsecode'] = "200";
+						$response_array['responsemessage'] = 'You are logged in successfully.';
+				}
+				else
+				{
+					$response_array['responsecode'] = "406";
+					$response_array['responsemessage'] = 'OTP does not match !';
+				}
+			}
+			else
+			{
+				$response_array['responsecode'] = "405";
+				$response_array['responsemessage'] = 'Invalid User Id!';
+				
+			}
+		}
+		else
+		{
+			$response_array['responsecode'] = "201";
+			$response_array['responsemessage'] = 'Token did not match';
+		}
+		$obj = (object)$response_array;//Creating Object from array
+		$response = json_encode($obj);
+		print_r($response);
+	}
+
+	public function sendOtp_post()
+	{
+		$token 				= $this->input->post("token");
+		$mobile_number 		= $this->input->post("mobile_number");
+		$email_address 		= $this->input->post("email_address");
+		
+		$response_array = array();
+		
+		if($token == TOKEN)
+		{
+			if(isset($mobile_number))
+			{
+				if($mobile_number=="")
+				{
+					$num = array(
+						'responsemessage' => 'Please Provide Mobile Number.',
+						'responsecode' => "202"
+					); //create an array
+					$obj = (object)$num;//Creating Object from array
+					$response_array=json_encode($obj);
+					print_r($response_array);
+				}
+				else
+				{
+					//$otp_code=rand(pow(10, 3),pow(10, 4)-1);
+					//$otp_code = "123456";
+					$otp_code = $this->Common_Model->otp();
+					$strMessage=urlencode("Dear user your CSNS Login OTP for MSMED is $otp_code");
+					$output=$this->Common_Model->SendSms($strMessage, $mobile_number);	
+					$response_array['OTP'] = $otp_code;
+				}
+			}
+
+			if(isset($email_address))
+			{
+				if($email_address=="")
+				{
+					$num = array(
+						'responsemessage' => 'Please Provide Email address.',
+						'responsecode' => "202"
+					); //create an array
+					$obj = (object)$num;//Creating Object from array
+					$response_array=json_encode($obj);
+					print_r($response_array);
+				}
+				else
+				{
+					//$email_otp=rand(pow(10, 3),pow(10, 4)-1);
+					$email_otp = $this->Common_Model->otp();
+					$subject="OTP for MSMED";
+					$strMessage="Dear user your OTP for MSMED is ".$email_otp;
+					$output=$this->Common_Model->SendMail($email_address,$strMessage,$subject);
+					$response_array['email_OTP'] = $email_otp;
+				}
+			}
+			$response_array['responsecode'] = "200";
+			$response_array['responsemessage'] = 'OTP sent successfully.';
+			
+			
+		}
+		else
+		{
+			$response_array['responsecode'] = "201";
+			$response_array['responsemessage'] = 'Token did not match';
+		}
+		$obj = (object)$response_array;//Creating Object from array
+		$response = json_encode($obj);
+		print_r($response);
+	}
 	public function logout_post()
 	{
 		$token 		= $this->input->post("token");
