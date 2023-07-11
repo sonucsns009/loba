@@ -1,0 +1,132 @@
+@media (max-width: 1024px) {
+  .about-text {
+    margin-left: 0px;
+  }
+  .feature-area .text {
+    position: relative;
+    padding: 30px 0px;
+  }
+}
+
+@media (max-width: 991px) {
+  .hero-text {
+    max-width: 100%;
+    margin-bottom: 30px;
+  }
+  .about-text {
+    margin-top: 30px;
+  }
+  .footer .text-right {
+    float: inherit;
+    text-align: center;
+  }
+  .footer .logo-light {
+    display: block;
+    margin: 0 auto;
+  }
+  .location-wrap {
+    margin-bottom: 20px;
+  }
+  .Staff-img {
+    width: 17%;
+    float: left;
+    margin-right: 3%;
+}
+  .staff-descreeption {
+    display: none;
+  }
+  .staff-left {
+      float: left;
+      width: 60%;
+    }
+  .Staff-containt {
+    float: left;
+    width: 80%;
+  }
+  .admin-sidebar{margin-bottom: 20px}
+
+
+}
+
+@media only screen and (max-width: 767px) {
+  .hero-2 .hero-2-title {
+    font-size: 30px;    
+  }
+  .section-heading .section-title {
+    font-size: 30px;
+  }
+  .why-us-img{margin-bottom: 30px}
+  .download-area .inner-wrapper .text h2 {    
+    font-size: 30px;
+    }
+  .contact-form-wrap {
+    padding: 20px;    
+  }
+  .contact-form-wrap::before {
+    top: -10px;
+    right: -10px;
+    width: 80px;
+    height: 160px;
+  }
+  .contact-form-wrap::after {      
+    width: 80px;
+    height: 80px;
+  }
+  #contact-form {  
+    padding: 20px;
+  }
+  #login-form {    
+    padding: 20px;
+    border-radius: 10px;      
+  }
+  .login-text p {
+    font-size: 16px;
+  }
+  .service-img {
+    margin-bottom: 20px;
+  }
+  
+
+}
+@media only screen and (max-width:480px) {
+ /* .booking-details {   
+      flex-wrap: wrap;
+  }
+  .order-status {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+  }
+  .order-status-detail {
+    width: 120px;
+  }*/
+  .bg-home, .bg-half-170 {
+    padding: 100px 0 50px 0;
+    height: auto;
+  }
+  .Staff-img {
+    width: 100%;
+    float: inherit;
+    margin-right: 0;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .Staff-img img {   
+    max-width: 90px;
+  }
+  .Staff-containt {
+    width: 100%;
+    text-align: center;
+  }
+  .staff-left {width: 100%;}
+  .staff-right {float: inherit; text-align: center;}
+  .orders-container .booking-details { flex-wrap: wrap;  }
+  .selected-service { flex-wrap: wrap;  }
+  .orders-container .theme-btn-1{ padding:0 10px }
+  .order-price-status {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+}

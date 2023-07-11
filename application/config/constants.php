@@ -88,4 +88,4 @@ define('TOKEN', md5('Lo$B0A#BO@K#I$N$G#')); //488d59dbd7558e8487e6ebadaf680764
 define('POSTLIMIT', 25); //
 define('TBPREFIX',"loba_");
 define('REMAINING_TIME', 10);
-define('DEFAULT_TIME_ZONE', 'Atlantic/Canary (UTC+0)');//Atlantic/Canary
+define('DEFAULT_TIME_ZONE', 'Asia/Kolkata');//Atlantic/Canary

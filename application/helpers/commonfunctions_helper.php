@@ -256,33 +256,9 @@ function create_thumb($width,$height,$file_path)
 			return false;
 		}
 	}
+	
 	### FUNCTION TO SEND SMS 
 	function fnSendSms($strMessage = "", $strMobile= "")
-	{ 
-		return "";
-		
-		/*require FCPATH . '/vendor/twilio/sdk/src/Twilio/autoload.php';
-		$strMessage = urldecode($strMessage);
-		$sid    = "ACab1c190bff294800a40bdb614ca41eb1"; 
-		$token  = "c303995b4ab79b3700bd0b09e8192430"; 
-		try{		 
-			$client = new Twilio\Rest\Client($sid, $token);		 
-			$message = $client->messages 
-                  ->create("$strMobile", // to 
-                           array(  
-                               "messagingServiceSid" => "MG3cf04f373a46d44e3e6b39a8e3d67496",      
-                               "body" => "$strMessage" 
-                           ) 
-                  );
-		  return $message->sid;
-		}
-		catch(exception $e){
-			return "";
-		}*/
-		
-	}
-	### FUNCTION TO SEND SMS 
-	function fnSendSmsTTTTTT($strMessage = "", $strMobile= "")
 	{
 		return "";	
 		#$strUserName = "SHTECH03";
