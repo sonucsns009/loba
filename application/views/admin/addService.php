@@ -69,12 +69,12 @@
 											 <div class="form-group row">
 											  	<div class="col-sm-6">
 	                                                <label  ><span>*</span> Service Description</label>
-	                                                <textarea class="form-control" name="service_description" id="service_description" rows="4" placeholder="Enter Description"></textarea>
+	                                                <textarea class="form-control" name="service_description" id="service_description" required="" rows="4" placeholder="Enter Description"></textarea>
 													<div class="err_msg" id="err_service_description"></div>
 												</div>
 												<div class="col-sm-6">
 	                                                <label  ><span>*</span> Service Description (Chinese)</label>
-	                                               <textarea class="form-control" name="service_description_ch" id="service_description_ch" rows="4" placeholder="输入说明"></textarea>
+	                                               <textarea class="form-control" name="service_description_ch" required="" id="service_description_ch" rows="4" placeholder="输入说明"></textarea>
 													<div class="err_msg" id="err_service_description_ch"></div>
 												</div>
                                             </div>
@@ -93,7 +93,7 @@
                                        		<div class="form-group row">
 											  	<div class="col-sm-6">
 	                                                <label for="paytype" ><span>*</span> Price & Payment</label>
-	                                                <select class="form-control" name="paytype" id="paytype">
+	                                                <select class="form-control" name="paytype" required="" id="paytype">
 	                                                	<option value="">-Select-</option>
 														<option value="Per Session">Per Session</option>
 	                                                	<option value="with a plan">with a plan</option>
@@ -103,11 +103,11 @@
 												</div>
 												<div class="col-sm-6">
 	                                                <label for="paytype_ch" ><span>*</span> Price & Payment (Chinese)</label>
-	                                                <select class="form-control" name="paytype_ch" id="paytype_ch">
+	                                                <select class="form-control" name="paytype_ch" required="" id="paytype_ch">
 	                                                	<option value="">-Select-</option>
-														<option value="Per Session">Per Session</option>
-	                                                	<option value="with a plan">with a plan</option>
-	                                                	<option value="per session or with a plan">per session or with a plan</option>
+														<option value="每次會話">每次會話</option>
+	                                                	<option value="有計劃">有計劃</option>
+	                                                	<option value="每次會議或有計劃">每次會議或有計劃</option>
 	                                                </select>
 													<div class="err_msg" id="err_paytype_ch"></div>
 												</div>
@@ -115,7 +115,7 @@
                                             <div class="form-group row">
 											  	<div class="col-sm-6">
 	                                                <label for="pricetype" ><span>*</span> Price Type</label>
-	                                                <select class="form-control" name="pricetype" id="pricetype">
+	                                                <select class="form-control" name="pricetype" required="" id="pricetype">
 	                                                	<option value="">-Select-</option>
                                                         <option value="Fixed Price">Fixed Price</option>
 	                                                </select>
@@ -123,9 +123,9 @@
 												</div>
 												<div class="col-sm-6">
 	                                                <label for="pricetype_ch" ><span>*</span> Price & Payment (Chinese)</label>
-	                                                <select class="form-control" name="pricetype_ch" id="pricetype_ch">
+	                                                <select class="form-control" name="pricetype_ch" required="" id="pricetype_ch">
 	                                                	<option value="">-Select-</option>
-                                                        <option value="Fixed Price">Fixed Price</option>
+                                                        <option value="固定價格">固定價格</option>
 	                                                </select>
 													<div class="err_msg" id="err_pricetype_ch"></div>
 												</div>
@@ -158,7 +158,7 @@
 											  	<div class="col-sm-6">
 	                                                <label for="buffer_time" ><span>*</span>Buffer Time</label>
 	                                                <input class="form-control" id="buffer_time" type="text" required="" name="buffer_time" placeholder="Enter Buffer Time">
-													<div class="err_msg" id="err_duration"></div>
+													<div class="err_msg" id="err_buffer_time"></div>
 												</div>
 												<div class="col-sm-6">
 	                                                <label for="buffer_time_ch" ><span>*</span> Buffer Time (Chinese)</label>
@@ -169,7 +169,7 @@
                                             <div class="form-group row">
 											  	<div class="col-sm-6">
 	                                                <label for="payment_preferences" ><span>*</span> Payment Preferences</label>
-	                                                <select class="form-control" name="payment_preferences" id="payment_preferences">
+	                                                <select class="form-control" name="payment_preferences" required="" id="payment_preferences">
 	                                                	<option value="">-Select-</option>
 	                                                	<option value="Entire amount either online or in person">Entire amount either online or in person </option>
 	                                                </select>
@@ -177,7 +177,7 @@
 												</div>
 												<div class="col-sm-6">
 	                                                <label for="payment_preferences_ch" ><span>*</span> Payment Preferences (Chinese)</label>
-	                                                <select class="form-control" name="payment_preferences_ch" id="payment_preferences_ch">
+	                                                <select class="form-control" name="payment_preferences_ch" required="" id="payment_preferences_ch">
 	                                                	<option value="">-Select-</option>
 														<option value="全部金额在线或亲自">全部金额在线或亲自</option>
 	                                                </select>
@@ -190,13 +190,14 @@
 	                                                <label for="video_conf" ><span>*</span> Video Conferencing</label>
 													<div class="form-group row">
 														<div class="col-sm-3">
-															<label> <input type="radio" name="video_conference" value="YES">  
+															<label> <input type="radio" name="video_conference" required="" class="video_conference" value="YES">  
 															YES </label>  
 														</div>
 														<div class="col-sm-3">
-															<label> <input type="radio" name="video_conference" value="NO">  
+															<label> <input type="radio" name="video_conference" required="" class="video_conference" value="NO">  
 															NO </label>  
 														</div>
+														<div class="err_msg" id="err_video_conference"></div>
 													</div>
 												</div>
 												
@@ -207,7 +208,7 @@
 									
                                 </div>
                                 <div class="pull-right">
-                                    <button type="submit" class="btn btn-primary custom-btn"  name="btn_save_service" id="btn_addslider">
+                                    <button type="submit" class="btn btn-primary custom-btn"  name="btn_save_service" id="btn_save_service">
 									Add</button>
 									
 									   <a  class="btn btn-primary custom-btn"  href="<?php echo base_url();?>backend/Services/manageService">

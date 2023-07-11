@@ -6,6 +6,13 @@ Class Doctor_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	public function check_userexists($mobile)
+	{
+		$query="SELECT user_id FROM ".TBPREFIX."users WHERE mobile ='". $mobile."' AND user_type='Service Provider'"; 
+		$res = $this->db->query($query);
+		return $res->num_rows();
+	}
+
 	public function check_doctorexists($doctor_name)
 	{
 		$query="SELECT doctor_id FROM ".TBPREFIX."doctors WHERE doctor_full_name ='". $doctor_name."'"; 

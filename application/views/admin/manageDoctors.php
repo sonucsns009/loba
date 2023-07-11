@@ -66,7 +66,6 @@
                                         <th>Name / CH</th>
                                         <th>Email / CH</th>
                                         <th>Mobile</th>
-                                        <th>Address / CH</th>
                                         <th>From Organization</th>
                                         <th>Charges/Hrs</th>
                                         <th>Charges/Visit</th>
@@ -88,7 +87,6 @@
                                             <td><?php echo ucfirst($doctor['doctor_full_name']);?> / <?php echo ucfirst($doctor['doctor_full_name_ch']);?></td>
                                             <td><?php echo ucfirst($doctor['email']);?> </td>
                                             <td><?php echo ucfirst($doctor['mobile_no']);?></td>
-                                            <td><?php echo $doctor['address'];?> / <?php echo $doctor['address_ch'];?></td>
                                             <td><?php echo $doctor['from_organization'];?> / <?php echo $doctor['from_organization_ch'];?></td>
                                             <td><?php echo $doctor['charges_per_hourse'];?> / <?php echo $doctor['charges_per_hourse_ch'];?></td>
                                             <td><?php echo $doctor['charges_per_visit'];?> / <?php echo $doctor['charges_per_visit_ch'];?></td>

@@ -54,44 +54,66 @@ class Doctors extends CI_Controller {
 				$from_organization_ch   =$this->input->post('from_organization_ch');
 				$charges_per_hourse_ch  =$this->input->post('charges_per_hourse_ch');
 				$charges_per_visit_ch	=$this->input->post('charges_per_visit_ch');
+				$password	            =md5($this->input->post('password'));
 				
 				// check already service exists
-				$dr_exists = $this->Doctor_model->check_doctorexists($full_name);
+				$user_exists = $this->Doctor_model->check_userexists($mobile);
 
-				if($dr_exists == 0)
+				if($user_exists == 0)
 				{
 					$input_data=array(
-                        'doctor_full_name'=>$full_name,
+                        'full_name'=>$full_name,
                         'email'=>$email,
-                        'mobile_no'=>$mobile,
+                        'mobile'=>$mobile,
                         'address'=>$address,
-                        'from_organization'=>$from_organization,
-                        'charges_per_hourse'=>$charges_per_hourse,
-                        'charges_per_visit'=>$charges_per_visit,
+                        'user_type'=>'Service Provider',
+                        'status_flag'=>'Active',
                         'added_date'=>date('Y-m-d H:i:s'),
-                        'updated_date'=>date('Y-m-d H:i:s')
+                        'edit_date'=>date('Y-m-d H:i:s')
 					);
-
-					$doctor_id=$this->Common_Model->insert_data('doctors',$input_data);
-						//echo $this->db->last_query();//exit;
-					if($doctor_id > 0)
+					$user_id=$this->Common_Model->insert_data('users',$input_data);
+					if($user_id > 0)
 					{
-						if($full_name_ch!='' )
+						$input_data=array(
+							'user_id'=>$user_id,
+							'doctor_full_name'=>$full_name,
+							'email'=>$email,
+							'mobile_no'=>$mobile,
+							'address'=>$address,
+							'from_organization'=>$from_organization,
+							'charges_per_hourse'=>$charges_per_hourse,
+							'charges_per_visit'=>$charges_per_visit,
+							'password'=>$password,
+							'added_date'=>date('Y-m-d H:i:s'),
+							'updated_date'=>date('Y-m-d H:i:s')
+						);
+
+						$doctor_id=$this->Common_Model->insert_data('doctors',$input_data);
+							//echo $this->db->last_query();//exit;
+						if($doctor_id > 0)
 						{
-							$input_data_ch=array(
-                                'doctor_id'=>$doctor_id,
-                                'doctor_full_name_ch'=>$full_name_ch,
-                                'address_ch'=>$address_ch,
-                                'from_organization_ch'=>$from_organization_ch,
-                                'charges_per_hourse_ch'=>$charges_per_hourse_ch,
-                                'charges_per_visit_ch'=>$charges_per_visit_ch,
-                                'added_date'=>date('Y-m-d H:i:s'),
-                                'updated_date'=>date('Y-m-d H:i:s')
-							);
-							$doctor_id_ch=$this->Common_Model->insert_data('doctors_ch',$input_data_ch);
+							if($full_name_ch!='' )
+							{
+								$input_data_ch=array(
+									'doctor_id'=>$doctor_id,
+									'doctor_full_name_ch'=>$full_name_ch,
+									'address_ch'=>$address_ch,
+									'from_organization_ch'=>$from_organization_ch,
+									'charges_per_hourse_ch'=>$charges_per_hourse_ch,
+									'charges_per_visit_ch'=>$charges_per_visit_ch,
+									'added_date'=>date('Y-m-d H:i:s'),
+									'updated_date'=>date('Y-m-d H:i:s')
+								);
+								$doctor_id_ch=$this->Common_Model->insert_data('doctors_ch',$input_data_ch);
+							}
+							$this->session->set_flashdata('success','Record added successfully.');
+							redirect(base_url().'backend/Doctors/manageDoctor');	
 						}
-                        $this->session->set_flashdata('success','Record added successfully.');
-						redirect(base_url().'backend/Doctors/manageDoctor');	
+						else
+						{	   
+							$data['doctorInfo'] = $_POST;
+							$this->session->set_flashdata('error','Error while adding record.');
+						}
 					}
 					else
 					{	   
@@ -122,12 +144,14 @@ class Doctors extends CI_Controller {
 		$data['title']='Update Doctor';
 		
 		$doctor_id=base64_decode($this->uri->segment(4));
+
 		if($doctor_id)
 		{
 			$data['doctorInfo']=$doctorInfo=$this->Doctor_model->getDoctorDetails($doctor_id,1);
 			$data['doctorInfo_ch']=$doctorInfo=$this->Doctor_model->getDoctorDetails_ch($doctor_id,1);
 			if(isset($_POST['btn_update_doctor']))
 			{
+				$doctor=$this->Doctor_model->getDoctorDetails($doctor_id,1);
 				//print_r($_POST);
 				$this->form_validation->set_rules('full_name','Full Name','required');
 			    $this->form_validation->set_rules('full_name_ch','Full Name','required');
@@ -148,8 +172,29 @@ class Doctors extends CI_Controller {
                     $from_organization_ch   =$this->input->post('from_organization_ch');
                     $charges_per_hourse_ch  =$this->input->post('charges_per_hourse_ch');
                     $charges_per_visit_ch	=$this->input->post('charges_per_visit_ch');
+                    $password	            =$this->input->post('password');
 					
-                    $input_data=array(
+					if($password!="")
+					{
+						$password=md5($password);
+					}
+					else
+					{
+						$password=$doctor[0]['password'];
+					}
+
+					$input_data=array(
+                        'full_name'=>$full_name,
+                        'email'=>$email,
+                        'mobile'=>$mobile,
+                        'address'=>$address,
+                        'user_type'=>'Service Provider',
+                        'status_flag'=>'Active',
+                        'edit_date'=>date('Y-m-d H:i:s')
+					);
+					$user=$this->Common_Model->update_data('users','user_id',$doctor[0]['user_id'],$input_data);
+
+					$input_data=array(
                         'doctor_full_name'=>$full_name,
                         'email'=>$email,
                         'mobile_no'=>$mobile,
@@ -157,6 +202,7 @@ class Doctors extends CI_Controller {
                         'from_organization'=>$from_organization,
                         'charges_per_hourse'=>$charges_per_hourse,
                         'charges_per_visit'=>$charges_per_visit,
+                        'password'=>$password,
                         'added_date'=>date('Y-m-d H:i:s'),
                         'updated_date'=>date('Y-m-d H:i:s')
 					);

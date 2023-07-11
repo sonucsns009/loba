@@ -23,7 +23,7 @@
 <script src="<?php echo base_url('template/admin/');?>assets/js/popper.min.js"></script>
 <script src="<?php echo base_url('template/admin/');?>assets/js/bootstrap.js"></script>
 
-	<script src="<?php echo base_url('template/admin/');?>assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="<?php echo base_url('template/admin/');?>assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
 <!-- feather icon js-->
 <script src="<?php echo base_url('template/admin/');?>assets/js/icons/feather-icon/feather.min.js"></script>
@@ -66,8 +66,7 @@
 <!--Customizer admin-->
 <script src="<?php echo base_url('template/admin/');?>assets/js/admin-customizer.js"></script>
 
-<!--dashboard custom js-->
-<script src="<?php echo base_url('template/admin/');?>assets/js/dashboard/default.js"></script>
+ 
 
 <!--right sidebar js-->
 <script src="<?php echo base_url('template/admin/');?>assets/js/chat-menu.js"></script>
@@ -82,32 +81,7 @@
 <script src="<?php echo base_url('template/admin/');?>assets/js/admin-script.js"></script>
 <script src="<?php echo base_url('template/admin/');?>assets/js/admin_validation.js"></script>
 
-<!-- ckeditor js-->
-<script src="<?php echo base_url('template/admin/');?>assets/js/editor/ckeditor/ckeditor.js"></script>
-<script src="<?php echo base_url('template/admin/');?>assets/js/editor/ckeditor/styles.js"></script>
-<script src="<?php echo base_url('template/admin/');?>assets/js/editor/ckeditor/adapters/jquery.js"></script>
-<script src="<?php echo base_url('template/admin/');?>assets/js/editor/ckeditor/ckeditor.custom.js"></script>
 
-
-<!-- Rating Js-->
-<script src="<?php echo base_url('template/admin/');?>assets/js/rating/jquery.barrating.js"></script>
-<script src="<?php echo base_url('template/admin/');?>assets/js/rating/rating-script.js"></script>
-
-<!-- Owlcarousel js-->
-<script src="<?php echo base_url('template/admin/');?>assets/js/owlcarousel/owl.carousel.js"></script>
-<script src="<?php echo base_url('template/admin/');?>assets/js/dashboard/product-carousel.js"></script>
-<!--Customizer admin-->
-<script src="<?php echo base_url('template/admin/');?>assets/js/admin-customizer.js"></script>
-
-<!-- lazyload js-->
-<script src="<?php echo base_url('template/admin/');?>assets/js/lazysizes.min.js"></script>
-
-
-<!--dropzone js-->
-<?php if($this->router->fetch_method()=="addMainCategory"){?>
-<script src="<?php echo base_url('template/admin/');?>assets/js/dropzone/dropzone.js"></script>
-<script src="<?php echo base_url('template/admin/');?>assets/js/dropzone/dropzone-script.js"></script>	
-<?php }?>
 
 
 <?php if($this->router->fetch_method()=="viewinvoice"){ ?>
@@ -123,6 +97,7 @@ document.getElementById("doPrintinvoice").addEventListener("click", function() {
 });
 </script>
 <?php } ?> 
+<script src="<?php echo base_url('template/admin/');?>assets/js/select2.js"></script>
 <script src="<?php echo base_url('template/admin/');?>assets/datatables/media/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url('template/admin/');?>assets/datatables/media/js/dataTables.bootstrap4.min.js"></script>
 <script src="<?php echo base_url('template/admin/');?>assets/datatables/extras/TableTools/Buttons-1.4.2/js/dataTables.buttons.min.js"></script>
@@ -134,7 +109,19 @@ document.getElementById("doPrintinvoice").addEventListener("click", function() {
 <script src="<?php echo base_url('template/admin/');?>assets/datatables/extras/TableTools/pdfmake-0.1.32/vfs_fonts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
 <script type="text/javascript">
+  $(document).ready(function(){
+   ('#service_id').select2();
+  });//document ready
+
+  $(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
+
 $(document).ready(function(){
   $("#frm_addCuisine").on("submit", function(){
     $("#body").fadeOut();

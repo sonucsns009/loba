@@ -9,6 +9,15 @@
             $this->load->database();
         }
       
+		function randomPromocode($length = 8) {
+			$characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			$charactersLength = strlen($characters);
+			$randomString = '';
+			for ($i = 0; $i < $length; $i++) {
+				$randomString .= $characters[random_int(0, $charactersLength - 1)];
+			}
+			return $randomString;
+		}
 		function randomImageName($length = 4) {
 			$characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			$charactersLength = strlen($characters);
@@ -106,7 +115,30 @@
 		  	}
 		} 
 
-		
+		public function getAllCountry()
+		{
+			$this->db->select('*');
+			$this->db->from(TBPREFIX.'country');
+			return $this->db->get()->result_array();
+		}
+
+		public function getAllStates()
+		{
+			$this->db->select('*');
+			$this->db->from(TBPREFIX.'state');
+			return $this->db->get()->result_array();
+		}
+
+		public function getAllCity($state_id='')
+		{
+			$this->db->select('*');
+			$this->db->from(TBPREFIX.'city');
+			if(isset($state_id) && $state_id!='' && $state_id!=0)
+			{
+				$this->db->where('state_id',$state_id);
+			}
+			return $this->db->get()->result_array();
+		}
 		
     }
 ?>

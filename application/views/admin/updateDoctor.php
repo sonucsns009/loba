@@ -121,13 +121,23 @@
 											<div class="err_msg" id="err_charges_per_visit_ch"></div>
 										</div>
 									</div>
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<label for="from_organization" > Password</label>
+											<input class="form-control" type="password" id="password1" name="password" placeholder="Enter Password">
+											<div class="err_msg" id="err_password1"></div>
+										</div>
+										<div class="col-sm-3">
+											
+										</div>
+									</div>
 							</div>
 						</div>
 						<div class="pull-right">
-							<button type="submit" class="btn btn-primary"  name="btn_update_doctor" id="btn_addslider">
+							<button type="submit" class="btn btn-primary custom-btn"  name="btn_update_doctor" id="btn_save_doctor">
 							Update</button>
 							
-								<a  class="btn btn-primary"  href="<?php echo base_url();?>backend/Doctors/manageDoctor">
+								<a  class="btn btn-primary custom-btn"  href="<?php echo base_url();?>backend/Doctors/manageDoctor">
 							Cancel</a>
 						</div></form>
 					</div>

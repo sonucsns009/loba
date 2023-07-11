@@ -30,7 +30,7 @@ class Services extends CI_Controller {
 	public function addService()
 	{
 		$data['title']='Add New Service';
-		print_r($_POST);//exit;
+		//print_r($_POST);//exit;
 		if(isset($_POST['btn_save_service']))
 		{
 			//print_r($_POST);

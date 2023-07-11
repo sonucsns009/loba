@@ -42,6 +42,21 @@
 					<li <?php if($this->router->fetch_class()=='Nurse'){?>style="background-color: #AA4FF6; color: #fff;"<?php }?>class=" <?php if($this->router->fetch_method()=='manageNurse'){?>nav-expanded nav-active <?php }?>">
 						<a class="sidebar-header" href="<?php echo base_url();?>backend/Nurse/manageNurse"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/nurse.png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>NURSES</span></a>                        
 					</li>
+					<li <?php if($this->router->fetch_class()=='Serviceprovider'){?>style="background-color: #AA4FF6; color: #fff;"<?php }?>class=" <?php if($this->router->fetch_method()=='manageServiceproviders'){?>nav-expanded nav-active <?php }?>">
+						<a class="sidebar-header" href="<?php echo base_url();?>backend/Serviceprovider/manageServiceproviders"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/users.png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>SERVICE PROVIDER</span></a>                        
+					</li>
+
+					<li <?php if($this->router->fetch_class()=='User'){?>style="background-color: #AA4FF6; color: #fff;"<?php }?>class=" <?php if($this->router->fetch_method()=='manageUser'){?>nav-expanded nav-active <?php }?>">
+						<a class="sidebar-header" href="<?php echo base_url();?>backend/User/manageUser"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/users.png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>USERS</span></a>                        
+					</li>
+
+					<li <?php if($this->router->fetch_class()=='Packages'){?>style="background-color: #AA4FF6; color: #fff;"<?php }?>class=" <?php if($this->router->fetch_method()=='managePackages'){?>nav-expanded nav-active <?php }?>">
+						<a class="sidebar-header" href="<?php echo base_url();?>backend/Packages/managePackages"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/list.png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>PACKAGES</span></a>                        
+					</li>
+					
+					<li <?php if($this->router->fetch_class()=='Promocode'){?>style="background-color: #AA4FF6; color: #fff;"<?php }?>class=" <?php if($this->router->fetch_method()=='managePromocode'){?>nav-expanded nav-active <?php }?>">
+						<a class="sidebar-header" href="<?php echo base_url();?>backend/Promocode/managePromocode"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/list.png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>PROMOTION CODE</span></a>                        
+					</li>
 					
 					
 					<li><a class="sidebar-header" href="<?php echo base_url();?>backend/Login/logout"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/exit.png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>LOGOUT</span></a>

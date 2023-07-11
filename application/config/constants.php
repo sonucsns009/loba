@@ -84,7 +84,7 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-define('TOKEN', md5('De$E0S#s@W#Y$$#')); //d02c6f83ae2cad686520ce00cad42b91
+define('TOKEN', md5('Lo$B0A#BO@K#I$N$G#')); //488d59dbd7558e8487e6ebadaf680764
 define('POSTLIMIT', 25); //
 define('TBPREFIX',"loba_");
 define('REMAINING_TIME', 10);

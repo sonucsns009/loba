@@ -40,10 +40,12 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('template/admin/');?>assets/scss/bootstrap-timepicker/css/bootstrap-timepicker.css">
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('template/admin/');?>assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('template/admin/');?>assets/css/select2.css">
 
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('template/admin/');?>assets/css/admin.css">
 	<script type="text/javascript">var BASEPATH="<?php echo base_url('backend/');?>";</script>
+    
 	<style>.err_msg{ color:red;}</style>
 </head>
 
@@ -58,7 +60,7 @@
             <div class="main-header-left d-lg-none" style="background-color: #dddddd;border: solid #75299d 5px;">
                 <div class="logo-wrapper" style="padding: 5px;">
                    <a href="<?php echo base_url();?>backend/dashboard">
-                        <img class="blur-up lazyloaded" src="<?php echo base_url('template/admin/');?>assets/images/logos/loba.webp" alt="LOBA logo">
+                        <img class="blur-up lazyloaded" src="<?php echo base_url('template/admin/');?>assets/images/logos/loba.png" alt="LOBA logo">
                     </a>			
                 </div>
             </div>

@@ -5,6 +5,13 @@ Class Nurse_model extends CI_Model {
 		// Call the Model constructor
 		parent::__construct();
 	}
+
+	public function check_userexists($mobile)
+	{
+		$query="SELECT user_id FROM ".TBPREFIX."users WHERE mobile ='". $mobile."' AND user_type='Service Provider'"; 
+		$res = $this->db->query($query);
+		return $res->num_rows();
+	}
 	
 	public function check_nurseexists($nurse_name)
 	{
