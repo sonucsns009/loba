@@ -7,10 +7,10 @@ class Nurse extends CI_Controller {
 		  $this->load->model('adminmodel/Nurse_model');
 		  $this->load->model('Common_Model');
 		// $this->load->library("pagination");
-		 if(! $this->session->userdata('logged_in'))
-		 {
-			redirect('backend/login', 'refresh');
-		 }
+		//  if(! $this->session->userdata('logged_in'))
+		//  {
+		// 	redirect('backend/login', 'refresh');
+		//  }
 	}
 	public function index()
 	{
@@ -68,6 +68,7 @@ class Nurse extends CI_Controller {
                         'mobile'=>$mobile,
                         'address'=>$address,
                         'user_type'=>'Service Provider',
+                        'service_type'=>'Nurse',
                         'status_flag'=>'Active',
                         'added_date'=>date('Y-m-d H:i:s'),
                         'edit_date'=>date('Y-m-d H:i:s')
@@ -189,6 +190,7 @@ class Nurse extends CI_Controller {
                         'mobile'=>$mobile,
                         'address'=>$address,
                         'user_type'=>'Service Provider',
+                        'service_type'=>'Nurse',
                         'status_flag'=>'Active',
                         'edit_date'=>date('Y-m-d H:i:s')
 					);

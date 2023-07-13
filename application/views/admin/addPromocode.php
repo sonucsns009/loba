@@ -37,11 +37,11 @@
 									   		<div class="form-group row">
 											  	<div class="col-sm-6">
 	                                                <label for="services_title" ><span>*</span> Promocode</label>
-	                                                <input class="form-control" id="promocode" type="text" required="" readonly name="promocode" placeholder="Enter Title">
+	                                                <input class="form-control" id="promocode" type="text" required="" readonly name="promocode" placeholder="Generate Code">
 													<div class="err_msg" id="err_promocode"></div>
 												</div>
 												<div class="col-sm-6"><br>
-	                                                <button class="btn btn-success" id="generate_code" type="button" required="" name="title_ch">Generate Code</button>
+	                                                <button class="btn btn-success" id="generate_code" type="button" required="" name="generate_code">Generate Code</button>
 												</div>
                                             </div>
                                             <div class="form-group row">

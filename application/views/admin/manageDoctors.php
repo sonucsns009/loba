@@ -1,5 +1,5 @@
 <?php 
-// $sessiondata=$this->session->userdata('logged_in');
+ $sessiondata=$this->session->userdata('logged_in');
 // 	#print_r($sessiondata);exit;
 // $session_admin_id=$sessiondata['admin_id']; 
 // $session_admin_name=$sessiondata['admin_name'];
@@ -84,12 +84,12 @@
                                         ?>
                                         <tr>
                                             <td><?php echo $i;?></td>
-                                            <td><?php echo ucfirst($doctor['doctor_full_name']);?> / <?php echo ucfirst($doctor['doctor_full_name_ch']);?></td>
+                                            <td><?php echo ucfirst($doctor['doctor_full_name']);?> / <?php echo ucfirst($doctor['doctor_full_name']);?></td>
                                             <td><?php echo ucfirst($doctor['email']);?> </td>
                                             <td><?php echo ucfirst($doctor['mobile_no']);?></td>
-                                            <td><?php echo $doctor['from_organization'];?> / <?php echo $doctor['from_organization_ch'];?></td>
-                                            <td><?php echo $doctor['charges_per_hourse'];?> / <?php echo $doctor['charges_per_hourse_ch'];?></td>
-                                            <td><?php echo $doctor['charges_per_visit'];?> / <?php echo $doctor['charges_per_visit_ch'];?></td>
+                                            <td><?php echo $doctor['from_organization'];?> / <?php echo $doctor['from_organization'];?></td>
+                                            <td><?php echo $doctor['charges_per_hourse'];?> / <?php echo $doctor['charges_per_hourse'];?></td>
+                                            <td><?php echo $doctor['charges_per_visit'];?> / <?php echo $doctor['charges_per_visit'];?></td>
                                             <?php
 												if($doctor['doctor_status']=='Active'){ $color="style='color:green'";}
 												else if($doctor['doctor_status']=='Delete'){ $color="style='color:red'";}

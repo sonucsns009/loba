@@ -240,10 +240,10 @@
 									
                                 </div>
                                 <div class="pull-right">
-                                    <button type="submit" class="btn btn-primary"  name="btn_update_service" id="btn_addslider">
+                                    <button type="submit" class="btn btn-primary custom-btn"  name="btn_update_service" id="btn_addslider">
 									Update</button>
 									
-									   <a  class="btn btn-primary"  href="<?php echo base_url();?>backend/Services/manageService">
+									   <a  class="btn btn-primary custom-btn"  href="<?php echo base_url();?>backend/Services/manageService">
 									Cancel</a>
                                 </div></form>
                             </div>

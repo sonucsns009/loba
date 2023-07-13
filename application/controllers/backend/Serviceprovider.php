@@ -7,7 +7,7 @@ class Serviceprovider extends CI_Controller {
 	public function __construct()
 	{
 		 parent::__construct();
-		 $this->load->model('adminModel/User_model');
+		 $this->load->model('adminmodel/User_model');
 		 $this->load->model('Common_Model');
 		 if(! $this->session->userdata('logged_in'))
 		 {
@@ -74,7 +74,7 @@ class Serviceprovider extends CI_Controller {
 					if(isset($_FILES['profile_pic']['name']) && $_FILES['profile_pic']['name'] != '') 
 					{
 						$ImageName = "profile_pic";
-						$target_dir = "uploads/user/profile_pic/";
+						$target_dir = "uploads/user/profile_photo/";
 						$profile_pic= $this->Common_Model->ImageUpload($ImageName,$target_dir);
 					}
 
@@ -99,6 +99,7 @@ class Serviceprovider extends CI_Controller {
                         'password'=>$password,
                         'address'=>$address,
                         'user_type'=>$user_type,
+                        'service_type'=>'Service Provider',
                         'gender'=>$gender,
                         'weight'=>$weight,
 						'mobility_aid' => $mobility_aid,
@@ -208,6 +209,143 @@ class Serviceprovider extends CI_Controller {
 		$data['error_msg']='';
 		$this->load->view('admin/admin_header',$data);
 		$this->load->view('admin/ServiceproviderDetails',$data);
+		$this->load->view('admin/admin_footer');
+	}
+
+	// Add User
+	public function updateServiceprovider()
+	{
+		$data['title']='Add New User';
+		
+		$user_id=base64_decode($this->uri->segment(4));
+       // echo $this->db->last_query();exit;
+		if($user_id)
+		{
+			$data['serviceList']=$this->User_model->getAllServices();
+			$data['serviceproviderInfo']=$serviceproviderInfo=$this->User_model->getServiceproviderDetails($user_id,1);
+			$data['serviceproviderInfo_ch']=$serviceproviderInfo=$this->User_model->getServiceproviderDetails_ch($user_id,1);
+			$data['userserviceList']=$this->User_model->getServiceproviderServices($user_id,1);
+			if(isset($_POST['btn_update_user']))
+			{
+				//print_r($_POST);
+				$this->form_validation->set_rules('full_name','Full Name','required');
+				$this->form_validation->set_rules('full_name_ch','Full Name','required');
+				
+				if($this->form_validation->run())
+				{
+					$full_name           =$this->input->post('full_name');
+					$email               =$this->input->post('email');
+					$mobile              =$this->input->post('mobile');
+					$alt_mobile          =$this->input->post('alt_mobile');
+					$address             =$this->input->post('address');
+					$gender	             =$this->input->post('gender');
+					$status              =$this->input->post('status');
+					$user_type           ='Service Provider';//$this->input->post('user_type');
+
+					// CH
+					$full_name_ch        =$this->input->post('full_name_ch');
+					$email_ch            =$this->input->post('email_ch');
+					$mobile_ch           =$this->input->post('mobile_ch');
+					$alt_mobile_ch       =$this->input->post('alt_mobile_ch');
+					$address_ch          =$this->input->post('address_ch');
+					$gender_ch           =$this->input->post('gender_ch');
+					$service_ids         =$this->input->post('service_ids');
+
+					
+					if(isset($_FILES['profile_pic']['name']) && $_FILES['profile_pic']['name'] != '') 
+					{
+						$ImageName = "profile_pic";
+						$target_dir = "uploads/user/profile_photo/";
+						$profile_pic= $this->Common_Model->ImageUpload($ImageName,$target_dir);
+					}
+
+					if(isset($_FILES['id_proof_front']['name']) && $_FILES['id_proof_front']['name'] != '') 
+					{
+						$ImageName = "id_proof_front";
+						$target_dir = "uploads/user/id_proof/";
+						$id_proof_front= $this->Common_Model->ImageUpload($ImageName,$target_dir);
+					}
+					if(isset($_FILES['id_proof_back']['name']) && $_FILES['id_proof_back']['name'] != '') 
+					{
+						$ImageName = "id_proof_back";
+						$target_dir = "uploads/user/id_proof/";
+						$id_proof_back= $this->Common_Model->ImageUpload($ImageName,$target_dir);
+					}
+
+						$input_data=array(
+							'full_name'=>$full_name,
+							'email'=>$email,
+							'mobile'=>$mobile,
+							'alt_mobile'=>$alt_mobile,
+							'password'=>$password,
+							'address'=>$address,
+							'user_type'=>$user_type,
+							//'service_type'=>'Doctor',
+							'gender'=>$gender,
+							'profile_pic'=>$profile_pic,
+							'status_flag'=>$status,
+							'added_date'=>date('Y-m-d H:i:s'),
+							'edit_date'=>date('Y-m-d H:i:s')
+						);
+
+						$this->Common_Model->update_data('users','user_id',$user_id,$input_data);
+							//echo $this->db->last_query();//exit;
+						
+							if($full_name_ch!='' )
+							{
+								if(isset($_FILES['id_proof_front_ch']['name']) && $_FILES['id_proof_front_ch']['name'] != '') 
+								{
+									$ImageName = "id_proof_front_ch";
+									$target_dir = "uploads/user/id_proof/";
+									$id_proof_front_ch= $this->Common_Model->ImageUpload($ImageName,$target_dir);
+								}
+								if(isset($_FILES['id_proof_back_ch']['name']) && $_FILES['id_proof_back_ch']['name'] != '') 
+								{
+									$ImageName = "id_proof_back_ch";
+									$target_dir = "uploads/user/id_proof/";
+									$id_proof_back_ch= $this->Common_Model->ImageUpload($ImageName,$target_dir);
+								}
+
+								$input_data_ch=array(
+									'user_id'=>$user_id,
+									'full_name'=>$full_name_ch,
+									'email'=>$email_ch,
+									'mobile'=>$mobile_ch,
+									'alt_mobile'=>$alt_mobile_ch,
+									'address'=>$address_ch,
+									'user_type'=>$user_type,
+									'added_date'=>date('Y-m-d H:i:s'),
+									'edit_date'=>date('Y-m-d H:i:s')
+								);
+								$user_id_ch=$this->Common_Model->update_data('users_ch','user_id',$user_id,$input_data_ch);
+							}
+
+							$remove=$this->User_model->removeservices($user_id);
+							foreach($service_ids as $service_id)
+							{
+								$arrData=array(
+									'user_id'=> $user_id,
+									'service_id'=>$service_id
+								);
+								$serviceexist= $this->User_model->checkserviceexist($service_id,$user_id);
+								if($serviceexist<=0)
+								{
+									$this->Common_Model->insert_data('user_services',$arrData);
+									//echo $this->db->last_query();
+								}
+							}
+							$this->session->set_flashdata('success','Record updated successfully.');
+							redirect(base_url().'backend/Serviceprovider/manageServiceproviders');	
+				}
+				else
+				{
+					$data['doctorInfo'] = $_POST;
+					$this->session->set_flashdata('error',$this->form_validation->error_string());
+				}
+			}
+		}
+		$this->load->view('admin/admin_header',$data);
+		$this->load->view('admin/updateServiceprovider',$data);
 		$this->load->view('admin/admin_footer');
 	}
 }

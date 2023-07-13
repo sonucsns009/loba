@@ -7,14 +7,13 @@
                     <div class="col-sm-6">
                         <div class="card tab2-card">
                             <div class="card-header">
-                                <h5>  SERVICE PROVIDER DETAILS </h5>
+                                <h5> USER DETAILS </h5>
                             </div>
                             <div class="card-body">
 						<?php
 							 if(isset($serviceproviderInfo) && count($serviceproviderInfo)>0)									
 							{
 							?>
-                               
                                 <div class="tab-content" id="myTabContent">
 								
                                     <div class="tab-pane fade active show" id="basicinfo" role="tabpanel" aria-labelledby="basicinfo-tab">
@@ -39,41 +38,41 @@
                                                     </div>
 													<div class="form-group">
 														<label for="services_title" > Full Name  </label><br>
-														<?php echo $serviceproviderInfo[0]['full_name'];?> / <?php echo $serviceproviderInfo_ch[0]['full_name'];?>
+														<?php echo $serviceproviderInfo[0]['full_name'];?> / <?php if(isset($serviceproviderInfo_ch[0]['full_name'])) echo $serviceproviderInfo_ch[0]['full_name'];?>
 													</div>
 
 													<div class="form-group">
 														<label>Email</label><br>
-														<?php echo $serviceproviderInfo[0]['email'];?> / <?php echo $serviceproviderInfo_ch[0]['email'];?>
+														<?php echo $serviceproviderInfo[0]['email'];?> / <?php if(isset($serviceproviderInfo_ch[0]['email'])) echo $serviceproviderInfo_ch[0]['email'];?>
 													</div>
 
 													<div class="form-group">
 														<label>Mobile No</label><br>
-														<?php echo $serviceproviderInfo[0]['mobile'];?> / <?php echo $serviceproviderInfo_ch[0]['mobile'];?>
+														<?php echo $serviceproviderInfo[0]['mobile'];?> / <?php if(isset($serviceproviderInfo_ch[0]['mobile'])) echo $serviceproviderInfo_ch[0]['mobile'];?>
 													</div>
 													<div class="form-group">
 														<label>Emergency Mobile No</label><br>
-														<?php echo $serviceproviderInfo[0]['alt_mobile'];?> / <?php echo $serviceproviderInfo_ch[0]['alt_mobile'];?>
+														<?php echo $serviceproviderInfo[0]['alt_mobile'];?> / <?php if(isset($serviceproviderInfo_ch[0]['alt_mobile'])) echo $serviceproviderInfo_ch[0]['alt_mobile'];?>
 													</div>
 													<div class="form-group">
 														<label>Address</label><br>
-														<?php echo $serviceproviderInfo[0]['address'];?> / <?php echo $serviceproviderInfo_ch[0]['address'];?>
+														<?php echo $serviceproviderInfo[0]['address'];?> / <?php if(isset($serviceproviderInfo_ch[0]['address'])) echo $serviceproviderInfo_ch[0]['address'];?>
 													</div>
 													<div class="form-group">
 														<label>Gender</label><br>
-														<?php echo $serviceproviderInfo[0]['gender'];?> / <?php echo $serviceproviderInfo_ch[0]['gender'];?>
+														<?php echo $serviceproviderInfo[0]['gender'];?> / <?php if(isset($serviceproviderInfo_ch[0]['gender'])) echo $serviceproviderInfo_ch[0]['gender'];?>
 													</div>
 													<div class="form-group">
 														<label>Weight</label><br>
-														<?php echo $serviceproviderInfo[0]['weight'];?> / <?php echo $serviceproviderInfo_ch[0]['weight'];?>
+														<?php echo $serviceproviderInfo[0]['weight'];?> / <?php if(isset($serviceproviderInfo_ch[0]['weight'])) echo $serviceproviderInfo_ch[0]['weight'];?>
 													</div>
 													<div class="form-group">
 														<label>Mobility Aid</label><br>
-														<?php echo $serviceproviderInfo[0]['mobility_aid'];?> / <?php echo $serviceproviderInfo_ch[0]['mobility_aid'];?>
+														<?php echo $serviceproviderInfo[0]['mobility_aid'];?> / <?php if(isset($serviceproviderInfo_ch[0]['mobility_aid'])) echo $serviceproviderInfo_ch[0]['mobility_aid'];?>
 													</div>
 													<div class="form-group">
 														<label>Identification Document Number</label><br>
-														<?php echo $serviceproviderInfo[0]['id_proof_no'];?> / <?php echo $serviceproviderInfo_ch[0]['id_proof_no'];?>
+														<?php echo $serviceproviderInfo[0]['id_proof_no'];?> / <?php if(isset($serviceproviderInfo_ch[0]['id_proof_no'])) echo $serviceproviderInfo_ch[0]['id_proof_no'];?>
 													</div>
                                                     <div class="form-group">
 														<label>Identification Document</label><br>
@@ -95,7 +94,7 @@
                                                    
 													<div class="form-group">
 														<label>Medical History</label><br>
-														<?php echo $serviceproviderInfo[0]['medical_history'];?> / <?php echo $serviceproviderInfo_ch[0]['medical_history'];?>
+														<?php echo $serviceproviderInfo[0]['medical_history'];?> / <?php if(isset($serviceproviderInfo_ch[0]['medical_history'])) echo $serviceproviderInfo_ch[0]['medical_history'];?>
 													</div>
 												</div>
 										    </div>
@@ -114,11 +113,11 @@
                     <div class="col-sm-6">
                         <div class="card tab2-card">
                             <div class="card-header">
-                                <h5> ALL SERVICES  </h5>
+                                <h5> ALL ADDRESS LIST  </h5>
                             </div>
                         <div class="card-body">
 						    <?php
-							 if(isset($serviceList) && count($serviceList)>0)									
+							 if(isset($addressList) && count($addressList)>0)									
 							{
 							?>
                                 <div class="tab-content" id="myTabContent">
@@ -130,13 +129,14 @@
 											  	<div class="col-sm-12">
                                                   <table class="table table-bordered table-striped mb-0" id="datatable-default">			
                                                     <?php
-                                                    if(isset($serviceList) && count($serviceList)>0)									
+                                                    if(isset($addressList) && count($addressList)>0)									
                                                     {
                                                     ?>							
                                                         <thead>
                                                             <tr>												
                                                                 <th>Sr.No</th>
-                                                                <th>Service Name</th>
+                                                                <th>Type</th>
+                                                                <th>Address</th>
                                                                 
                                                             </tr>											
                                                         </thead>											
@@ -144,13 +144,13 @@
                                                         <?php 
                                                         //print_r($serviceList);
                                                         $i=1; 											
-                                                            foreach($serviceList as $service)
+                                                            foreach($addressList as $address)
                                                             {			
                                                             ?>
                                                                 <tr>
                                                                     <td><?php echo $i;?></td>
-                                                                    <td><?php echo ucfirst($service['service_name']);?></td>
-                                                                    
+                                                                    <td><?php echo ucfirst($address['address_type']);?></td>
+                                                                    <td><?php echo ucfirst($address['address1']);?></td>
                                                                 </tr>											
                                                         <?php $i++; } ?>
                                                         </tbody>									

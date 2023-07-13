@@ -17,14 +17,14 @@ Class Dashboard_model extends CI_Model {
 		return $tsr=$res->result_array();
 	}
 
-	public function getAllNurse()
-	{
-		$this->db->select('n.*,ch.*');
-		$this->db->from(TBPREFIX.'nurse as n');
-		$this->db->join(TBPREFIX.'nurse_ch as ch','ch.nurse_id = n.nurse_id','left');
-		$res=$this->db->get();
-		return $tsr=$res->result_array();
-	}
+	// public function getAllNurse()
+	// {
+	// 	$this->db->select('n.*,ch.*');
+	// 	$this->db->from(TBPREFIX.'nurse as n');
+	// 	$this->db->join(TBPREFIX.'nurse_ch as ch','ch.nurse_id = n.nurse_id','left');
+	// 	$res=$this->db->get();
+	// 	return $tsr=$res->result_array();
+	// }
 
 	public function getAllServices()
 	{

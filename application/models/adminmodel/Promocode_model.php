@@ -35,4 +35,14 @@ Class Promocode_model extends CI_Model {
 			return $query->num_rows();
 	}
 
+	public function getAllServices()
+	{
+		$this->db->select('*');
+		$this->db->from(TBPREFIX.'main_services');
+		$this->db->where('service_id','1');
+		$this->db->or_where('service_id','2');
+		$res=$this->db->get();
+		return $tsr=$res->result_array();
+	}
+
 }

@@ -1,13 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Doctors extends CI_Controller {
+class Booking extends CI_Controller {
 	public function __construct()
 	{
 		  parent::__construct();
-		  $this->load->model('adminmodel/Doctor_model');
+		  $this->load->model('adminmodel/Booking_model');
 		  $this->load->model('Common_Model');
 		// $this->load->library("pagination");
-		//print_r($this->session->userdata('logged_in'));
 		//exit;
 		 if(!$this->session->userdata('logged_in'))
 		 {
@@ -18,13 +17,13 @@ class Doctors extends CI_Controller {
 	{
 		$this->load->view('admin/admin_header');
 	}
-	// // code for manage Admin
-	 public function manageDoctor()
+	// // code for manage Booking
+	public function manageBooking()
 	{
-		$data['title']='Manage Doctors';
-		$data['doctorList']=$this->Doctor_model->getAllDoctors();
+		$data['title']='Manage Bookings';
+		$data['bookingList']=$this->Booking_model->getAllBookings();
 		$this->load->view('admin/admin_header',$data);
-		$this->load->view('admin/manageDoctors',$data);
+		$this->load->view('admin/manageBooking',$data);
 		$this->load->view('admin/admin_footer');
 	}
    
@@ -56,9 +55,10 @@ class Doctors extends CI_Controller {
 				$from_organization_ch   =$this->input->post('from_organization_ch');
 				$charges_per_hourse_ch  =$this->input->post('charges_per_hourse_ch');
 				$charges_per_visit_ch	=$this->input->post('charges_per_visit_ch');
+				$password	            =md5($this->input->post('password'));
 				
 				// check already service exists
-				$user_exists = $this->Doctor_model->check_userexists($mobile);
+				$user_exists = $this->Booking_model->check_userexists($mobile);
 
 				if($user_exists == 0)
 				{
@@ -149,11 +149,11 @@ class Doctors extends CI_Controller {
 
 		if($doctor_id)
 		{
-			$data['doctorInfo']=$doctorInfo=$this->Doctor_model->getDoctorDetails($doctor_id,1);
-			$data['doctorInfo_ch']=$doctorInfo=$this->Doctor_model->getDoctorDetails_ch($doctor_id,1);
+			$data['doctorInfo']=$doctorInfo=$this->Booking_model->getDoctorDetails($doctor_id,1);
+			$data['doctorInfo_ch']=$doctorInfo=$this->Booking_model->getDoctorDetails_ch($doctor_id,1);
 			if(isset($_POST['btn_update_doctor']))
 			{
-				$doctor=$this->Doctor_model->getDoctorDetails($doctor_id,1);
+				$doctor=$this->Booking_model->getDoctorDetails($doctor_id,1);
 				//print_r($_POST);
 				$this->form_validation->set_rules('full_name','Full Name','required');
 			    $this->form_validation->set_rules('full_name_ch','Full Name','required');
@@ -249,20 +249,20 @@ class Doctors extends CI_Controller {
 		$this->load->view('admin/admin_footer');
 	}
 	
-	public function doctorDetails()
+	public function bookingDetails()
 	{
-		$data['title']='Doctor Details';
-		$doctor_id=base64_decode($this->uri->segment(4));
-		if($doctor_id)
+		$data['title']='Booking Details';
+		$booking_id=base64_decode($this->uri->segment(4));
+		if($booking_id)
 		{
-			$data['doctorInfo']=$doctorInfo=$this->Doctor_model->getDoctorDetails($doctor_id,1);
-			$data['doctorInfo_ch']=$doctorInfo=$this->Doctor_model->getDoctorDetails_ch($doctor_id,1);
+			$data['bookingInfo']=$bookingInfo=$this->Booking_model->getBookingDetails($booking_id,1);
+			$data['orderInfo']=$bookingInfo=$this->Booking_model->getOrderDetails($booking_id,1);
 		}
 		//$arrSession = $this->session->userdata('logged_in');
 		//$admin_id = $arrSession['admin_id'];
 		$data['error_msg']='';
 		$this->load->view('admin/admin_header',$data);
-		$this->load->view('admin/doctorDetails',$data);
+		$this->load->view('admin/bookingDetails',$data);
 		$this->load->view('admin/admin_footer');
 	}
 

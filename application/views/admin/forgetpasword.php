@@ -10,7 +10,7 @@
     <meta name="author" content="Deseos Admin Section.">
      <link rel="icon" href="<?php echo base_url();?>template/front/images/logo-small.png" type="image/x-icon">
    <!-- <link rel="shortcut icon" href="<?php echo base_url('template/admin/');?>assets/images/dashboard/favicon.png" type="image/x-icon">-->
-    <title>Deseos - Forgot Password</title>
+    <title>LOBA - Forgot Password</title>
 
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
@@ -39,41 +39,17 @@
 <body>
 
 <!-- page-wrapper Start-->
-<div class="page-wrapper" style="background-image:url('https://deseos.csns.in/template/admin/assets/images/login-bg.jpg'); ">
+<div class="page-wrapper" style="background-image:url('<?php echo base_url('template/admin/');?>assets/images/logos/11.jpg'); ">
     <div class="authentication-box">
         <div class="container">
             <div class="row">
-                <div class="col-md-5 p-0 card-left">
-                    <div class="card bg-primary bg-color">
-                        <div class="svg-icon" style="padding: 16px !important;">
-                            <img class="blur-up lazyloaded" src="https://deseos.csns.in/template/admin/assets/images/dashboard/logo-white.png" alt="" style="width:230px;height:183px;">
-                        
-                        </div>
-
-                        <div class="single-item">
-                            <div>
-                                <div>
-                                    <h3>Welcome to Deseos</h3>
-                                    
-                                </div>
-                            </div>
-                            <!--<div>
-                                <div>
-                                    <h3>Welcome to Taladdesi</h3>
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.</p>
-                                </div>
-                            </div>
-                            <div>
-                                <div>
-                                    <h3>Welcome to Taladdesi</h3>
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.</p>
-                                </div>
-                            </div>-->
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-7 p-0 card-right">
+            
+                <div class="col-md-12">
                     <div class="card tab2-card">
+                        <div class="card-header text-center">
+                            <img class="blur-up lazyloaded" src="<?php echo base_url('template/admin/');?>assets/images/logos/Loba_logo.png" alt="" style="max-width:150px;">
+                            <h3>Welcome to LOBA</h3>
+                        </div>
                         <div class="card-body">
                             <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
                                 <li class="nav-item">
@@ -111,7 +87,6 @@
 										<!--<input type="hidden" name="user_type" id="user_type" value="Admin" />-->
 									 <select name="user_type" id="user_type" required class="form-control">	
 									<option value="Admin">Admin</option>	
-									<option value="Subadmin">Subadmin</option>			
 									</select>
 									</div>	
 									
@@ -120,8 +95,8 @@
 											 <div class="err_msg" id="err_email_address" style="color:red"></div>
                                         </div>
                                        
-                                        <div class="form-button pull-right">
-                                            <button class="btn btn-primary" type="submit" name="btn_forget_password" id="btn_forget_password" >Submit</button>
+                                        <div class="form-button text-center">
+                                            <button class="btn btn-primary" type="submit custom-btn" name="btn_forget_password" id="btn_forget_password" >Submit</button>
 											
 											<a href="<?php echo base_url();?>backend/login" class="btn btn-primary">Back</a>
                                         </div>

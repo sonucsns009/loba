@@ -7,7 +7,7 @@ class Dashboard extends CI_Controller {
 	public function __construct()
 	{
 		 parent::__construct();
-		 $this->load->model('adminModel/Dashboard_model');
+		 $this->load->model('adminmodel/Dashboard_model');
 		 if(! $this->session->userdata('logged_in'))
 		 {
 			redirect('backend/login', 'refresh');
@@ -19,11 +19,11 @@ class Dashboard extends CI_Controller {
 		
 		#echo $this->db->last_query();exit;
 		$doctors=$this->Dashboard_model->getAllDoctors();
-		$nurse=$this->Dashboard_model->getAllNurse();
+		//$nurse=$this->Dashboard_model->getAllNurse();
 		$services=$this->Dashboard_model->getAllServices();
 
 		$data['alldoctors']=count($doctors);
-		$data['allnurse']=count($nurse);
+		$data['allnurse']=0;//($nurse);
 		$data['allservices']=count($services);
 
 		$session_data=$this->session->userdata('logged_in');

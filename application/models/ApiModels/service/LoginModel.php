@@ -63,6 +63,27 @@ Class LoginModel extends CI_Model {
 		}
 	}
 
+	public function getuserDetails($username) 
+	{
+		if(!empty ($username))
+		{
+			$condition = "(email = '".$username."' OR mobile = '".$username."') ";		
+			$this->db->select('*');
+			$this->db->from(TBPREFIX.'users');
+			$this->db->where($condition);
+			$this->db->where('user_type','Service Provider');
+			$this->db->limit(1);
+			$query = $this->db->get();
+			//echo $this->db->last_query();exit;
+			$user= $query->row();
+			if(isset($user->profile_pic) && $user->profile_pic!="")
+			{
+				$user->profile_pic=base_url()."uploads/user/profile_photo/".$user->profile_pic;;
+			}
+			return $user;
+		}
+	}
+
 	public function chk_otp($data,$qty) 
 	{
 		if(!empty ($data))
@@ -95,12 +116,34 @@ Class LoginModel extends CI_Model {
 		$query = $this->db->get();
 		return $query->row();
 	}
-	/*
-	public function updateAdminPassword($admin_email,$rnd_number)
+
+	public function getUserDetail($user_id) 
 	{
-		$data = array('admin_password' => md5($rnd_number) );
-		$this->db->where('user_type','Super Admin');
-		$this->db->where('admin_email',$admin_email);
-		$this->db->update('admin',$data); 
-	}*/
+		if(!empty ($user_id))
+		{
+			$this->db->select('*');
+			$this->db->from(TBPREFIX.'users');
+			$this->db->where('user_id',$user_id);
+			$this->db->where('user_type','Service Provider');
+			$this->db->limit(1);
+			$query = $this->db->get();
+			//echo $this->db->last_query();exit;
+			$user= $query->row();
+			if(isset($user->profile_pic) && $user->profile_pic!="")
+			{
+				$user->profile_pic=base_url()."uploads/user/profile_photo/".$user->profile_pic;;
+			}
+			//print_r($user);exit;
+			return $user;
+		}
+	}
+
+	public function removeservices($user_id) 
+	{
+		if(!empty($user_id))
+		{
+			$this->db->where('user_id',$user_id);
+			$this->db->delete(TBPREFIX.'user_services');
+		}
+	}
 }

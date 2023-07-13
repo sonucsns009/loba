@@ -55,7 +55,11 @@
 					</li>
 					
 					<li <?php if($this->router->fetch_class()=='Promocode'){?>style="background-color: #AA4FF6; color: #fff;"<?php }?>class=" <?php if($this->router->fetch_method()=='managePromocode'){?>nav-expanded nav-active <?php }?>">
-						<a class="sidebar-header" href="<?php echo base_url();?>backend/Promocode/managePromocode"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/list.png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>PROMOTION CODE</span></a>                        
+						<a class="sidebar-header" href="<?php echo base_url();?>backend/Promocode/managePromocode"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/list.png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>PROMO CODE</span></a>                        
+					</li>
+					
+					<li <?php if($this->router->fetch_class()=='Booking'){?>style="background-color: #AA4FF6; color: #fff;"<?php }?>class=" <?php if($this->router->fetch_method()=='manageBooking'){?>nav-expanded nav-active <?php }?>">
+						<a class="sidebar-header" href="<?php echo base_url();?>backend/Booking/manageBooking"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/list.png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>BOOKINGS</span></a>                        
 					</li>
 					
 					

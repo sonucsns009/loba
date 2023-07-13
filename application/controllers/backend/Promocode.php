@@ -32,7 +32,7 @@ class Promocode extends CI_Controller {
 	public function addPromocode()
 	{
 		$data['title']='Add New Promocode';
-        $data['serviceList']=$this->User_model->getAllServices();
+        $data['serviceList']=$this->Promocode_model->getAllServices();
 		if(isset($_POST['btn_save_promocode']))
 		{
 			//print_r($_POST);
@@ -94,12 +94,11 @@ class Promocode extends CI_Controller {
 	public function updatePromocode()
 	{
 		$data['title']='Update Promocode';
-        $data['serviceList']=$this->User_model->getAllServices();
+        $data['serviceList']=$this->User_model->getAllServiceList();
 		$code_id=base64_decode($this->uri->segment(4));
 		if($code_id)
 		{
-			$data['promocodeInfo']=$promocodeInfo=$this->Package_model->getPackageDetails($package_id,1);
-			$data['promocodeInfo_ch']=$promocodeInfo_ch=$this->Package_model->getPackageDetails_ch($package_id,1);
+			$data['promocodeInfo']=$promocodeInfo=$this->Promocode_model->getPromocodeDetails($code_id,1);
 			if(isset($_POST['btn_update_promocode']))
 			{
 				//print_r($_POST);
@@ -136,7 +135,7 @@ class Promocode extends CI_Controller {
 				}
 				else
 				{
-					$data['packageInfo'] = $_POST;
+					$data['promocodeInfo'] = $_POST;
 					$this->session->set_flashdata('error',$this->form_validation->error_string());
 				}
 			}
@@ -146,46 +145,57 @@ class Promocode extends CI_Controller {
 		$this->load->view('admin/admin_footer');
 	}
 	
-	public function packageDetails()
+	
+	## Delete  
+	public function deletePromocode()
 	{
-		$data['title']='Package Details';
-		$package_id=base64_decode($this->uri->segment(4));
-		if($package_id)
-		{
-			$data['packageInfo']=$packageInfo=$this->Package_model->getNurseDetails($package_id,1);
-			$data['packageInfo_ch']=$packageInfo_ch=$this->Package_model->getNurseDetails_ch($package_id,1);
-		}
-		//$arrSession = $this->session->userdata('logged_in');
-		//$admin_id = $arrSession['admin_id'];
-		$data['error_msg']='';
-		$this->load->view('admin/admin_header',$data);
-		$this->load->view('admin/packageDetails',$data);
-		$this->load->view('admin/admin_footer');
-	}
-
-	## Update Service 
-	public function deletePackage()
-	{
-		$data['title']='Delete Package';
+		$data['title']='Delete Promocode';
 		
-		$package_id=base64_decode($this->uri->segment(4));
-		if($package_id)
+		$code_id=base64_decode($this->uri->segment(4));
+		if($code_id)
 		{
 			$input_data=array(
-				'package_status' => 'Delete',
+				'promocode_status' => 'Delete',
 				'dateupdated'=>date('Y-m-d H:i:s'),
 			);
-			$this->Common_Model->update_data('packages','package_id',$package_id,$input_data);
+			$this->Common_Model->update_data('promo_code','promocode_id',$code_id,$input_data);
 			//	echo $this->db->last_query();exit;
 		 
 			$this->session->set_flashdata('success','Record delete successfully.');
-			redirect(base_url().'backend/Packages/managePackages');	
+			redirect(base_url().'backend/Promocode/managePromocode');	
 		}
 		else
 		{	   
-			$data['nurseInfo'] = $_POST;
+			$data['promocodeInfo'] = $_POST;
 			$this->session->set_flashdata('error','Error while adding record.');
 		}
 	}
 
+	## Change Status  
+	public function change_status()
+	{
+		$data['title']='Status Change';
+		
+		$code_id=base64_decode($this->uri->segment(4));
+		if($code_id)
+		{
+			$status          =$this->input->post('status');
+			$input_data=array(
+				'promocode_status' => $status,
+				'dateupdated'=>date('Y-m-d H:i:s'),
+			);
+			$this->Common_Model->update_data('promo_code','promocode_id',$code_id,$input_data);
+			//	echo $this->db->last_query();exit;
+		 
+			$this->session->set_flashdata('success','Status updated successfully.');
+			redirect(base_url().'backend/Promocode/managePromocode');	
+		}
+		else
+		{	   
+			$data['promocodeInfo'] = $_POST;
+			$this->session->set_flashdata('error','Error while adding record.');
+		}
+	}
+
+	
 }

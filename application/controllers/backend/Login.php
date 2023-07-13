@@ -5,7 +5,8 @@ class Login extends CI_Controller {
 	{
 		 parent::__construct();
 		// $this->load->helper("commonfunctions");		
-		 $this->load->model('adminModel/Login_model');
+		 $this->load->model('adminmodel/Login_model');
+		 $this->load->model('Common_Model');
 	}
 	public function index()
 	{
@@ -26,7 +27,6 @@ class Login extends CI_Controller {
 				
 				if ($result11>0) 
 				{
-					
 						$result1 = $this->Login_model->chk_login($data,0);
 
 						//echo $this->db->last_query();exit;
@@ -38,18 +38,17 @@ class Login extends CI_Controller {
 							
 							if($status=='Active')
 							{
-								
-								$session_data = array('rstUser_id' => 0,
+								$session_data = array(
 															'admin_id' => $result[0]['admin_id'],
 															'admin_name' => $result[0]['admin_name'],
 															'username' => $result[0]['username'],
 															'mobile_number' => $result[0]['mobile_number'],
 															'user_type' =>  $result[0]['user_type'],
-															'subroles' => $result[0]['subroles'],
 															'status'=>$result[0]['status']);
 								
 								$this->session->set_userdata('logged_in', $session_data);
 								redirect('backend/Dashboard', 'refresh');
+								//redirect('backend/Doctors/manageDoctor', 'refresh');
 							}
 							else  if($status=='Inactive')
 							{
@@ -134,21 +133,23 @@ class Login extends CI_Controller {
 						//update for admin password
 						$uptem=$this->Login_model->upadteAdminPassword($user_type,$admin_email,$rnd_number);
 					}
-					$output_arr=array('view_load'=>'adminside_forgot_password');
-					$input_arr=array('adminname'=>$admin_name,
-									'base_pat'=>base_url(),
-									'rnd_number'=>$rnd_number,
-									'subject_mail'=>'Deseos:'.$subject_mail.'  Regarding Forgot Password');
-					
+					$subject_mail="LOBA: Admin Regarding Forgot Password";
+					// $output_arr=array('view_load'=>'adminside_forgot_password');
+					// $input_arr=array('adminname'=>$admin_name,
+					// 				'base_pat'=>base_url(),
+					// 				'rnd_number'=>$rnd_number,
+					// 				'subject_mail'=>'LOBA:'.$subject_mail.'  Regarding Forgot Password');
+					$strmessage="Hello,<br></br>";
+					$strmessage.="Your password is ".$rnd_number."<br><br>";
+					$strmessage.="login url - ".base_url()."backend/Login";
 					//echo 'pp';exit;
-					$ress=smt_send_mail($admin_email,$output_arr,$input_arr);
-					//
+					$ress=$this->Common_Model->SendMail($admin_email,$strmessage,$subject_mail);
+					//var_dump($ress);exit;
 					if($ress)
 					{
 						//$data['success']='Password is send to your mail successfully.';
 						$this->session->set_flashdata('success', 'Password is send to your mail successfully.');
 						redirect(base_url().'backend/Login/index', 'refresh');
-						
 					}
 					else
 					{
@@ -171,27 +172,17 @@ class Login extends CI_Controller {
 
 
 	 public function randomPassword() 
-
 	 {
-
 		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-
 		$pass = array(); //remember to declare $pass as an array
 
 		$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-
 		for ($i = 0; $i < 8; $i++) 
-
 		{
-
 			$n = rand(0, $alphaLength);
-
 			$pass[] = $alphabet[$n];
-
 		}
-
 		return implode($pass); //turn the array into a string
-
 	}
 
 }

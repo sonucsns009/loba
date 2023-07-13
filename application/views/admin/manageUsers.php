@@ -93,8 +93,9 @@
                                             <td><?php /*
                                                 <a href="<?php echo base_url();?>backend/Nurse/updateNurse/<?php echo base64_encode($user['user_id']);?>"><i data-feather="edit"></i></a>
                                                 <a href="<?php echo base_url();?>backend/Nurse/deleteNurse/<?php echo base64_encode($user['user_id']);?>" class="delete-row" onclick="javascript:return chk_isDeleteComnfirm();"><i data-feather="trash-2"></i></a>
-                                                <a href="<?php echo base_url();?>backend/Nurse/userDetails/<?php echo base64_encode($user['user_id']);?>"><i data-feather="eye"></i></a>
-                                            */ ?></td>
+                                              */ ?> 
+												<a href="<?php echo base_url();?>backend/User/userDetails/<?php echo base64_encode($user['user_id']);?>"><i data-feather="eye"></i></a>
+                                            </td>
                                         </tr>											
                                 <?php $i++; }?>
                                 </tbody>									

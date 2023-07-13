@@ -33,7 +33,16 @@ Class User_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from(TBPREFIX.'main_services');
 		$this->db->where('service_id','1');
-		$this->db->or_where('service_id','3');
+		$this->db->or_where('service_id','2');
+		$res=$this->db->get();
+		return $tsr=$res->result_array();
+	}
+
+	public function getAllServiceList()
+	{
+		$this->db->select('*');
+		$this->db->from(TBPREFIX.'main_services');
+		$this->db->or_where('service_status','Active');
 		$res=$this->db->get();
 		return $tsr=$res->result_array();
 	}
@@ -87,6 +96,27 @@ Class User_model extends CI_Model {
 		$this->db->from(TBPREFIX.'user_services as us');
 		$this->db->join(TBPREFIX.'main_services as s','s.service_id=us.service_id','left');
 		$this->db->where('us.user_id',$user_id);
+		$query = $this->db->get();
+		if($qty==1)
+			return $query->result_array();
+		else
+			return $query->num_rows();
+	}
+
+	public function removeservices($user_id) 
+	{
+		if(!empty($user_id))
+		{
+			$this->db->where('user_id',$user_id);
+			$this->db->delete(TBPREFIX.'user_services');
+		}
+	}
+
+	public function getUserAddress($user_id,$qty) 
+	{
+		$this->db->select('*');
+		$this->db->from(TBPREFIX.'adresses');
+		$this->db->where('user_id',$user_id);
 		$query = $this->db->get();
 		if($qty==1)
 			return $query->result_array();

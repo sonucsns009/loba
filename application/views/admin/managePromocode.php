@@ -91,8 +91,8 @@
 												?>
                                             <td <?=$color;?>><?php echo $promocode['promocode_status'];?> </td>
                                             <td>
-                                                <a href="<?php echo base_url();?>backend/Packages/updatePackage/<?php echo base64_encode($promocode['promocode_id']);?>"><i data-feather="edit"></i></a>
-                                                <a href="<?php echo base_url();?>backend/Packages/deletePackage/<?php echo base64_encode($promocode['promocode_id']);?>" class="delete-row" onclick="javascript:return chk_isDeleteComnfirm();"><i data-feather="trash-2"></i></a>
+                                                <a href="<?php echo base_url();?>backend/Promocode/updatePromocode/<?php echo base64_encode($promocode['promocode_id']);?>"><i data-feather="edit"></i></a>
+                                                <a href="<?php echo base_url();?>backend/Promocode/deletePromocode/<?php echo base64_encode($promocode['promocode_id']);?>" class="delete-row" onclick="javascript:return chk_isDeleteComnfirm();"><i data-feather="trash-2"></i></a>
                                                 <!-- <a href="<?php echo base_url();?>backend/Packages/packageDetails/<?php echo base64_encode($promocode['promocode_id']);?>"><i data-feather="eye"></i></a> -->
                                             </td>
                                         </tr>											

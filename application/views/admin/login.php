@@ -46,24 +46,13 @@
     <div class="authentication-box">
         <div class="container">
             <div class="row">
-                <div class="col-md-5 p-0 card-left">
-                    <div class="card bg-primary bg-color">
-                        <div class="svg-icon" style="padding: 16px !important;">
-                            <img class="blur-up lazyloaded" src="<?php echo base_url('template/admin/');?>assets/images/logos/loba_logo.png" alt="" style="width:230px;margin-top: 70px;">
-                        </div>
-
-                        <div class="single-item">
-                            <div>
-                                <div>
-                                    <h3>Welcome to LOBA</h3>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-7 p-0 card-right">
+                
+                <div class="col-md-12  ">
                     <div class="card tab2-card">
+                        <div class="card-header text-center">
+                            <img class="blur-up lazyloaded" src="<?php echo base_url('template/admin/');?>assets/images/logos/Loba_logo.png" alt="" style="max-width:150px;">
+                            <h3>Welcome to LOBA</h3>
+                        </div>
                         <div class="card-body">
                             <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
                                 <li class="nav-item">
@@ -111,7 +100,7 @@
                                                 <a href="<?php echo base_url();?>backend/login/forgotpassword" class="btn btn-default forgot-pass">lost your password</a>
                                             </div>
                                         </div>
-                                        <div class="form-button pull-right">
+                                        <div class="form-button text-center">
                                             <button class="btn btn-primary" type="submit" name="btn_login" id="btn_login" >Login</button>
                                         </div>
                                         <!--<div class="form-footer" style="margin-top: 80px;">

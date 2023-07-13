@@ -122,16 +122,7 @@
 													<div class="err_msg" id="err_charges_per_visit_ch"></div>
 												</div>
                                             </div>
-											<div class="form-group row">
-												<div class="col-sm-6">
-													<label for="from_organization" > Password</label>
-													<input class="form-control" type="password" required="" id="password" name="password" placeholder="Enter Password">
-													<div class="err_msg" id="err_password"></div>
-												</div>
-												<div class="col-sm-3">
-													
-												</div>
-											</div>
+											
 											
                                     </div>
 									
