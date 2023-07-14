@@ -68,12 +68,102 @@ Class Home_model extends CI_Model {
 
 			return $query->num_rows();
 	}
-	//get user addresses
-    public function getUserAddreess($user_id,$qty)
+	//get user information
+    public function getOrderData($intOrderId,$qty)
 	{
 		$this->db->select('*');
-		$this->db->where(TBPREFIX.'adresses.user_id',$user_id);
-		$query=$this->db->get(TBPREFIX.'adresses');
+		$this->db->where(TBPREFIX.'orders.order_id',$intOrderId);
+		$query=$this->db->get(TBPREFIX.'orders');
+
+		if($qty==1)
+
+			return $query->row_array();
+
+		else
+
+			return $query->num_rows();
+	}
+	//get discount amount
+    public function getDiscountAmt($service_id,$qty)
+	{
+		$this->db->select('*');
+		$this->db->where(TBPREFIX.'main_services.service_id',$service_id);
+		$query=$this->db->get(TBPREFIX.'main_services');
+
+		if($qty==1)
+
+			return $query->row_array();
+
+		else
+
+			return $query->num_rows();
+	}
+	 //get doctor list
+	 public function getDoctorList($user_id,$qty,$lng)
+	 {
+		 if($lng == "" || $lng == 'english')
+			 $strPrefix = "";
+		 else
+			 $strPrefix = "_ch";
+		 $this->db->select('*');
+		 $query=$this->db->get(TBPREFIX.'doctors'.$strPrefix.'');
+ 
+		 if($qty==1)
+ 
+			 return $query->result_array();
+ 
+		 else
+ 
+			 return $query->num_rows();
+	 }
+
+	 //get nurse list
+	 public function getNurseList($user_id,$qty,$lng)
+	 {
+		 if($lng == "" || $lng == 'english')
+			 $strPrefix = "";
+		 else
+			 $strPrefix = "_ch";
+		 $this->db->select('*');
+		 $query=$this->db->get(TBPREFIX.'nurse'.$strPrefix.'');
+ 
+		 if($qty==1)
+ 
+			 return $query->result_array();
+ 
+		 else
+ 
+			 return $query->num_rows();
+	 }
+
+  //get promo code
+  public function getPromoCode($category_id,$qty)
+  {
+	 
+	  $this->db->select('*');
+	  $query=$this->db->where(TBPREFIX.'promo_code.service_id',$category_id);
+	  $query=$this->db->where(TBPREFIX.'promo_code.promocode_status','Active');
+	  $query=$this->db->where(TBPREFIX.'promo_code.promocode_type','Fixed Price');
+	  $query=$this->db->get(TBPREFIX.'promo_code');
+
+	  if($qty==1)
+
+		  return $query->row_array();
+
+	  else
+
+		  return $query->num_rows();
+  }
+	//get user addresses
+    public function getUserAddreess($user_id,$qty,$lng)
+	{
+		if($lng == "" || $lng == 'english')
+			$strPrefix = "";
+		else
+			$strPrefix = "_ch";
+		$this->db->select('*');
+		$this->db->where(TBPREFIX.'adresses'.$strPrefix.'.user_id',$user_id);
+		$query=$this->db->get(TBPREFIX.'adresses'.$strPrefix.'');
 
 		if($qty==1)
 
@@ -83,6 +173,7 @@ Class Home_model extends CI_Model {
 
 			return $query->num_rows();
 	}
+	
 	//get user card list
     public function getCardList($user_id,$qty)
 	{
@@ -145,13 +236,34 @@ Class Home_model extends CI_Model {
 
 			return $query->num_rows();
 	}
-	//get user selected address
-    public function getSelectedPickupAddress($user_id,$qty)
+	//get user all booking
+    public function geBookingInfoByUser($user_id,$qty)
 	{
 		$this->db->select('*');
-		$this->db->where(TBPREFIX.'adresses.user_id',$user_id);
-		$this->db->where(TBPREFIX.'adresses.is_seleted',1);
-		$query=$this->db->get(TBPREFIX.'adresses');
+		//$this->db->where(TBPREFIX.'service_booking.booking_status',"pending");
+		$this->db->where(TBPREFIX.'service_booking.user_id',$user_id);
+		///$this->db->join(TBPREFIX.'adresses',TBPREFIX.'adresses.user_id='.TBPREFIX.'adresses.user_id');
+		$query=$this->db->get(TBPREFIX.'service_booking');
+
+		if($qty==1)
+
+			return $query->row_array();
+
+		else
+
+			return $query->num_rows();
+	}
+	//get user selected address
+    public function getSelectedPickupAddress($user_id,$qty,$lng)
+	{
+		if($lng == "" || $lng == 'english')
+			$strPrefix = "";
+		else
+			$strPrefix = "_ch";
+		$this->db->select('*');
+		$this->db->where(TBPREFIX.'adresses'.$strPrefix.'.user_id',$user_id);
+		$this->db->where(TBPREFIX.'adresses'.$strPrefix.'.is_seleted',1);
+		$query=$this->db->get(TBPREFIX.'adresses'.$strPrefix.'');
 
 		if($qty==1)
 
@@ -162,12 +274,16 @@ Class Home_model extends CI_Model {
 			return $query->num_rows();
 	}
 	//get user selected drop address
-    public function getSelectedDropAddress($user_id,$qty)
+    public function getSelectedDropAddress($user_id,$qty,$lng)
 	{
+		if($lng == "" || $lng == 'english')
+			$strPrefix = "";
+		else
+			$strPrefix = "_ch";
 		$this->db->select('*');
-		$this->db->where(TBPREFIX.'adresses.user_id',$user_id);
-		$this->db->where(TBPREFIX.'adresses.is_selected_drop',1);
-		$query=$this->db->get(TBPREFIX.'adresses');
+		$this->db->where(TBPREFIX.'adresses'.$strPrefix.'.user_id',$user_id);
+		$this->db->where(TBPREFIX.'adresses'.$strPrefix.'.is_selected_drop',1);
+		$query=$this->db->get(TBPREFIX.'adresses'.$strPrefix.'');
 
 		if($qty==1)
 
@@ -272,6 +388,32 @@ Class Home_model extends CI_Model {
 		return false;
 	}
 
-   
+   //code for check card no
+	public function chkCardName($card_no,$qty)
+	{
+		$this->db->select(TBPREFIX.'customer_cards.*');
+		$this->db->where(TBPREFIX.'customer_cards.card_no',$card_no);
+		$query=$this->db->get(TBPREFIX.'customer_cards');
+
+		if($qty==1)
+
+			return $query->result_array();
+
+		else
+
+			return $query->num_rows();
+	}
+	//Inserting code for add card
+	public function add_card($data) 
+	{
+		$res=$this->db->insert(TBPREFIX.'customer_cards',$data);
+		if($res)
+		{
+			$user_id=$this->db->insert_id();
+			return $user_id;
+		}
+		else
+			return false;
+	}
 }
 ?>

@@ -229,7 +229,7 @@ class Home extends CI_Controller {
 										'edit_date'=>date('Y-m-d H:i:s')
 									);
 					
-					$banner_id=$this->Home_model->add_customer($input_data);
+					$banner_id=$this->Home_model->add_card($input_data);
 					//echo $this->db->last_query();exit;
 					if($banner_id>0)
 					{
@@ -805,7 +805,17 @@ class Home extends CI_Controller {
 	{
 		$data['title']="Service Booking";
 		$data['page_title']="book_service";
+		
+		$cookie_name = 'site_lang';
+		if(!isset($_COOKIE[$cookie_name])) {
 
+		  $lang = 'english';
+
+		} else {
+
+		  $lang = $_COOKIE[$cookie_name];
+
+		}
 		$sessiondata=$this->session->userdata('logged_in');
 		$user_id=0;
 		if(isset($sessiondata))
@@ -813,13 +823,23 @@ class Home extends CI_Controller {
 			$user_id=$sessiondata['user_id']; 
 		}
 		$data['category_id']=$category;
-		$data['userAddresses']=$this->Home_model->getUserAddreess($user_id,1);
-		$data['selectedAddress']=$selectedAddress=$this->Home_model->getSelectedPickupAddress($user_id,1);
-		$data['selectedDropAddress']=$selectedDropAddress=$this->Home_model->getSelectedDropAddress($user_id,1);
+		$data['userAddresses']=$this->Home_model->getUserAddreess($user_id,1,$lang);
+		$data['doctorList']=$doctorList=$this->Home_model->getDoctorList($user_id,1,$lang);
+		$data['selectedAddress']=$selectedAddress=$this->Home_model->getSelectedPickupAddress($user_id,1,$lang);
+		$data['selectedDropAddress']=$selectedDropAddress=$this->Home_model->getSelectedDropAddress($user_id,1,$lang);
+		$data['bookingData']=$bookingData=$this->Home_model->geBookingInfo($user_id,1);
+
 		// print_r($data['selectedAddress']);
 		// exit;
 		$this->load->view('front/front_header');
-		$this->load->view('front/service_booking',$data);
+		if($category==1 || $category==2)
+		{
+			$this->load->view('front/service_booking',$data);
+		}
+		else
+		{
+			$this->load->view('front/doctor_booking_list',$data);
+		}
 		$this->load->view('front/front_footer');
 	}
 
@@ -914,7 +934,18 @@ class Home extends CI_Controller {
 		);
 		$this->db->where('address_id',$id);
 		$this->db->update('loba_adresses',$updatedata);
-		$data['userAddresses']=$userAddresses=$this->Home_model->getUserAddreess($user_id,1);
+
+		$cookie_name = 'site_lang';
+		if(!isset($_COOKIE[$cookie_name])) {
+
+		  $lang = 'english';
+
+		} else {
+
+		  $lang = $_COOKIE[$cookie_name];
+
+		}
+		$data['userAddresses']=$userAddresses=$this->Home_model->getUserAddreess($user_id,1,$lang);
 		
 		
 		$output='';
@@ -964,7 +995,17 @@ class Home extends CI_Controller {
 		);
 		$this->db->where('address_id',$id);
 		$this->db->update('loba_adresses',$updatedata);
-		$data['userAddresses']=$userAddresses=$this->Home_model->getUserAddreess($user_id,1);
+		$cookie_name = 'site_lang';
+		if(!isset($_COOKIE[$cookie_name])) {
+
+		  $lang = 'english';
+
+		} else {
+
+		  $lang = $_COOKIE[$cookie_name];
+
+		}
+		$data['userAddresses']=$userAddresses=$this->Home_model->getUserAddreess($user_id,1,$lang);
 		
 		
 		$output='';
@@ -1039,29 +1080,58 @@ class Home extends CI_Controller {
 		$booking_date=$_POST['booking_date'];
 		$NoofHours=$_POST['NoofHours'];
 		$MobilityAid=$_POST['MobilityAid'];
+		$booking_id=$_POST['booking_id'];
+		if($booking_id > 0)
+        {
+            $updatedata=array(
+				"service_category_id"=>$category_id,
+				"session_id"=>$user_id,
+				"user_id"=>$user_id,
+				"pickup_address_id"=>$pickup_address_id,
+				"drop_address_id"=>$drop_address_id,
+				"pickup_type"=>"",
+				"drop_type"=>"",
+				"booking_date"=>$booking_date,
+				"time_slot"=>$booking_time,
+				"no_of_hourse"=>$NoofHours,
+				"select_mobility_aid"=>$MobilityAid,
+				"booking_status"=>"pending",
+				"date_added"=>$user_id,
+				"date_updated"=>$user_id,
+            );
+            $this->db->where('booking_id',$booking_id);
+            $this->db->update('loba_service_booking',$updatedata);
+            //$insert_id=$this->db->insert_id();
 
-		$updatedata=array(
-			"service_category_id"=>$category_id,
-			"session_id"=>$user_id,
-			"user_id"=>$user_id,
-			"pickup_address_id"=>$pickup_address_id,
-			"drop_address_id"=>$drop_address_id,
-			"pickup_type"=>"",
-			"drop_type"=>"",
-			"booking_date"=>$booking_date,
-			"time_slot"=>$booking_time,
-			"no_of_hourse"=>$NoofHours,
-			"select_mobility_aid"=>$MobilityAid,
-			"booking_status"=>"pending",
-			"date_added"=>$user_id,
-			"date_updated"=>$user_id,
-		);
-		//$this->db->where('address_id',$id);
-		$this->db->insert('loba_service_booking',$updatedata);
-		$insert_id=$this->db->insert_id();
-		echo $insert_id;
+            echo $updatedata;
+
+        }
+        else
+        {
+				$updatedata=array(
+					"service_category_id"=>$category_id,
+					"session_id"=>$user_id,
+					"user_id"=>$user_id,
+					"pickup_address_id"=>$pickup_address_id,
+					"drop_address_id"=>$drop_address_id,
+					"pickup_type"=>"",
+					"drop_type"=>"",
+					"booking_date"=>$booking_date,
+					"time_slot"=>$booking_time,
+					"no_of_hourse"=>$NoofHours,
+					"select_mobility_aid"=>$MobilityAid,
+					"booking_status"=>"pending",
+					"date_added"=>$user_id,
+					"date_updated"=>$user_id,
+				);
+				//$this->db->where('address_id',$id);
+				$this->db->insert('loba_service_booking',$updatedata);
+				$insert_id=$this->db->insert_id();
+				echo $insert_id;
+		}
 		
 	}
+	
 	//code for booking details
 	public function bookingDetails()
 	{
@@ -1074,10 +1144,18 @@ class Home extends CI_Controller {
 		}
 		$data['userData']=$userData=$this->Home_model->getUserProfileInfo($user_id,1);
 		$data['bookingData']=$bookingData=$this->Home_model->geBookingInfo($user_id,1);
+		
 		$data['pickupaddress']=$pickupaddress=$this->Home_model->getPickupAddress($bookingData['pickup_address_id'],1);
 		$data['dropaddress']=$dropaddress=$this->Home_model->getPickupAddress($bookingData['drop_address_id'],1);
 		$data['categoryInfo']=$categoryInfo=$this->Home_model->getCategoryInfo($bookingData['service_category_id'],1);
+		$data['promoCode']=$promoCode=$this->Home_model->getPromoCode($bookingData['service_category_id'],1);
+
+		// echo "<pre>";
+		// print_r($bookingData['service_category_id']);
+		// exit;
 		$data['user_id']=$user_id;
+
+		
 		if(isset($_POST['btn_pay_now']))
 		{
 			redirect('Home/cardList');
@@ -1526,7 +1604,19 @@ class Home extends CI_Controller {
 		{
 			$user_id=$sessiondata['user_id']; 
 		}
-		$data['userAddresses']=$this->Home_model->getUserAddreess($user_id,1);
+		$cookie_name = 'site_lang';
+
+		if(!isset($_COOKIE[$cookie_name])) {
+
+		  $lang = 'english';
+
+		} else {
+
+		  $lang = $_COOKIE[$cookie_name];
+
+		}
+		$data['userAddresses']=$this->Home_model->getUserAddreess($user_id,1,$lang);
+
 		$data['cardData']=$selectedAddress=$this->Home_model->getCardList($user_id,1);
 		
 		$this->load->view('front/front_header');
@@ -1546,7 +1636,18 @@ class Home extends CI_Controller {
 		{
 			$user_id=$sessiondata['user_id']; 
 		}
-		$data['userAddresses']=$this->Home_model->getUserAddreess($user_id,1);
+		$cookie_name = 'site_lang';
+
+		if(!isset($_COOKIE[$cookie_name])) {
+
+		  $lang = 'english';
+
+		} else {
+
+		  $lang = $_COOKIE[$cookie_name];
+
+		}
+		$data['userAddresses']=$this->Home_model->getUserAddreess($user_id,1,$lang);
 		if(isset($_POST['btn_add_card']))
 		{
 			
@@ -1626,6 +1727,318 @@ class Home extends CI_Controller {
 		
 		$this->load->view('front/front_header');
 		$this->load->view('front/addCard',$data);
+		$this->load->view('front/front_footer');
+	}
+	//code for add card save
+	public function addCardSave()
+	{
+		$data['title']="Add Card";
+		$data['page_title']="add_card";
+
+		$sessiondata=$this->session->userdata('logged_in');
+		$user_id=0;
+		if(isset($sessiondata))
+		{
+			$user_id=$sessiondata['user_id']; 
+		}
+		
+		$cookie_name = 'site_lang';
+
+		if(!isset($_COOKIE[$cookie_name])) {
+
+		  $lang = 'english';
+
+		} else {
+
+		  $lang = $_COOKIE[$cookie_name];
+
+		}
+		$data['userAddresses']=$this->Home_model->getUserAddreess($user_id,1,$lang);
+		
+				$card_type=$this->input->post('card_type');
+				$card_name=$this->input->post('card_name');
+				//$banner_url=$this->input->post('banner_url');
+				$card_no=$this->input->post('card_no');
+				$expiry_date=$this->input->post('expiry_date');
+				$cvv_no=$this->input->post('cvv_no');
+			    
+
+				$chk_exist=$this->Home_model->chkCardName($card_no,0);
+
+				if($chk_exist > 0)
+				{
+					$this->session->set_flashdata('error','Card is already exist.');
+					//redirect(base_url().'Home/signUp');	
+				}
+				else
+				{
+					
+					$input_data=array(
+										'card_type'=>$card_type,
+										'card_name'=>$card_name,
+										'card_no'=>$card_no,
+										'expiry_date'=>$expiry_date,
+										'cvv_no'=>$cvv_no,
+										'user_id'=>$user_id,
+										'card_status'=>'active',
+										'dateadded'=>date('Y-m-d H:i:s'),
+										'dateupdated'=>date('Y-m-d H:i:s')
+									);
+					
+					$banner_id=$this->Home_model->add_card($input_data);
+					//echo $this->db->last_query();exit;
+					if($banner_id>0)
+					{
+						
+
+						$this->session->set_flashdata('success','Card Added successfully.');
+						//redirect(base_url().'Home/signUp');	
+					}
+					else
+					{
+						$this->session->set_flashdata('error','Error while registration.');
+						//redirect(base_url().'Home/signUp');	
+					}
+				}
+					
+			
+		echo $banner_id;
+	}
+
+	//code for add card save
+	public function addCardSelect()
+	{
+		$data['title']="Add Card Select";
+		$data['page_title']="add_card_select";
+
+		$sessiondata=$this->session->userdata('logged_in');
+		$user_id=0;
+		if(isset($sessiondata))
+		{
+			$user_id=$sessiondata['user_id']; 
+		}
+		
+		$cookie_name = 'site_lang';
+
+		if(!isset($_COOKIE[$cookie_name])) {
+
+		  $lang = 'english';
+
+		} else {
+
+		  $lang = $_COOKIE[$cookie_name];
+
+		}
+		$data['userAddresses']=$this->Home_model->getUserAddreess($user_id,1,$lang);
+		
+				$card_id=$this->input->post('card_id');
+				
+
+				$input_data22=array(
+										'is_select'=>'no',
+										'dateupdated'=>date('Y-m-d H:i:s')
+									);
+
+					$this->db->where('loba_customer_cards.user_id',$user_id);
+					$this->db->update('loba_customer_cards',$input_data22);
+					
+					$input_data=array(
+										'is_select'=>'yes',
+										'card_status'=>'active',
+										'dateupdated'=>date('Y-m-d H:i:s')
+									);
+					
+					$this->db->where('loba_customer_cards.card_id',$card_id);
+					$this->db->update('loba_customer_cards',$input_data);
+					//echo $this->db->last_query();exit;
+					
+						
+
+						$this->session->set_flashdata('success','Card Selected successfully.');
+						//redirect(base_url().'Home/signUp');	
+					
+			
+		echo $input_data;
+	}
+
+	//code for place order
+	public function placeBooking()
+	{
+		date_default_timezone_set(DEFAULT_TIME_ZONE);	
+		$sessiondata=$this->session->userdata('logged_in');
+		$user_id=0;
+		if(isset($sessiondata))
+		{
+			$user_id=$sessiondata['user_id']; 
+		}
+		$data['userData']=$userData=$this->Home_model->getUserProfileInfo($user_id,1);
+		$data['bookingData']=$bookingData=$this->Home_model->geBookingInfo($user_id,1);
+		$data['pickupaddress']=$pickupaddress=$this->Home_model->getPickupAddress($bookingData['pickup_address_id'],1);
+		$data['dropaddress']=$dropaddress=$this->Home_model->getPickupAddress($bookingData['drop_address_id'],1);
+		$data['categoryInfo']=$categoryInfo=$this->Home_model->getCategoryInfo($bookingData['service_category_id'],1);
+		
+			$total_order_amount=$categoryInfo['amount'];
+			$data['promoCode']=$promoCode=$this->Home_model->getPromoCode($bookingData['service_category_id'],1);
+
+			//$data['discountamt']=$discountamt=$this->Home_model->getDiscountAmt($categoryInfo['service_id'],1);
+			//$discount=$discountamt['']
+			$booking_id=$bookingData['booking_id'];
+			$discount=0;
+
+			$discount=$promoCode['promocode_discount'];
+			$order_place_amt=$final_amount=$total_order_amount-$discount;//$_POST['final_amount'];
+			$order_status="pending";
+			$arrOrderData = array(
+				"user_id"     	 => $user_id,
+				"booking_id"     	 => $bookingData['booking_id'],
+				"offer_id"=>0,
+				'coupon_code'=>$promoCode['promocode_code'],
+				'offer_amount'=>round($discount,2),
+				'offer_percentage'=>"",
+				'total_order_amount'=>round($total_order_amount,2),
+				"order_place_amt"      => round($final_amount,2),
+				"admin_commision"		=>round(0,2),
+				"comment"      => "",
+				"booking_date"=>$bookingData['booking_date'],
+				"booking_time"=>$bookingData['time_slot'],
+				"order_date"      => date('Y-m-d H:i:s'),
+				"order_status"      => $order_status,
+				"dateadded"      => date('Y-m-d H:i:s'),
+				"dateupdated"    => date('Y-m-d H:i:s'),
+			);
+			$intOrderId   = $this->Home_model->addOrder($arrOrderData);
+
+			//print_r($arrOrderData);exit;
+			if($intOrderId > 0)
+			{
+				$transaction_id = substr(hash('sha256', mt_rand() . microtime()), 0, 20);
+
+						$main_order_no="LOBA-ORD-".$intOrderId;
+						$arrOrderData2 = array(
+							"order_no"     	 => $main_order_no,
+						);
+						$this->db->where('loba_orders.order_id',$intOrderId);
+						$this->db->update('loba_orders',$arrOrderData2);
+						
+						
+					$payment_type = "stripe";
+					
+					// print_r($_POST);
+					// exit;
+					$payment_status = "pending";
+					if($payment_type == "stripe" && $final_amount >=1)
+					{
+						if(is_array($userData) && count($userData) > 0){
+							$strUserName = $userData['full_name'];
+							$strUserEmail = $userData['email'];
+							$strUserPhone = $userData['mobile'];
+							
+						}
+						require_once('application/libraries/stripe-php/init.php');
+									$strAccountId  = "";
+									
+									
+									//$stripe = new \Stripe\StripeClient('sk_test_51JCRyHKP7cPoaXd6nYAZXmby9SktMMGuCIlkNBvlYz29c85bnd3IcAYakmbRZew1gIIvUQXns0uC2dD3ruOYi6JX005Fo0UY9L');
+									$stripe = new \Stripe\StripeClient('sk_test_51NSHCBSDcd5hYqkEWmY8zKQZXuv4PNuoii4wbG3oPg01qaxdPmwFIkBVJ7bXEUqEhhV06bw0Qc88dkZpy7nyao4A00NYLKAYhR');
+									
+									$customer = $stripe->customers->create([
+															'description' => $strUserName,
+															'name' => $strUserName,
+															'phone' => $strUserPhone,
+															'email' => $strUserEmail,
+															['metadata' => ['order_id' => $intOrderId]],
+															//['shipping' => ['address' => ['line1' => $strUserAddress1]]],
+															//['shipping' => ['address' => ['city' => $strUserCity]]],
+
+															//'shipping.address.line1' => $strUserAddress1,
+															//'shipping.address.line2' => $strUserAddress2,
+															//'shipping.address.city' => $strUserCity,
+															//'shipping.address.state' => $strUserState,
+															//'payment_method' => 'pm_card_visa',
+														]);
+														
+												//['stripe_account' => $strAccountId]		
+									  //\Stripe\Stripe::setApiKey('sk_test_51JCRyHKP7cPoaXd6nYAZXmby9SktMMGuCIlkNBvlYz29c85bnd3IcAYakmbRZew1gIIvUQXns0uC2dD3ruOYi6JX005Fo0UY9L');		
+									  \Stripe\Stripe::setApiKey('sk_test_51NSHCBSDcd5hYqkEWmY8zKQZXuv4PNuoii4wbG3oPg01qaxdPmwFIkBVJ7bXEUqEhhV06bw0Qc88dkZpy7nyao4A00NYLKAYhR');		
+									
+									$argument = array( 
+														 'payment_method_types' => ['card'],
+														  'amount' => round($order_place_amt,2)*100,
+														  'currency' => 'CNY',
+														  'customer' =>  $customer->id,
+														array('metadata' => array('order_id' => $intOrderId,'transaction_id' => $transaction_id))
+													);
+									
+									#echo "<pre>"; print_r($strAccountId); 
+									#echo "<pre>"; print_r($argument); 	#,['stripe_account' => $strAccountId]			
+									$paymentIntent = \Stripe\PaymentIntent::create
+																			(
+																				$argument
+																			);
+									//print_r($paymentIntent); exit;
+									
+									#echo "<pre>"; print_r($paymentIntent); exit;
+									$clientSecret = 	$paymentIntent->client_secret;
+									$output = [
+												'clientSecret' => $paymentIntent->client_secret,
+											  ];				  
+										  
+									// $arrOrderTxnData = array(
+									// 						"user_id"     	 	 => $uid,
+									// 						"rst_id"     	 	 => $rst_id,
+									// 						"order_id"     	 	 => $intOrderId,
+									// 						"transaction_id" 	 => $transaction_id,
+									// 						"payment_type"   	 => $payment_type,
+									// 						"payment_response"   => $payment_response,
+									// 						"order_selling_amount"  => round($totsellingprice,2),
+									// 						"addons_amount"      => round($addonsTotal,2),
+									// 						"total_order_amount"  => round($order_place_amt,2),
+									// 						"offer_id"=>$offer_id,
+									// 						'offer_amount'=>round($offer_amount,2),
+									// 						'offer_percentage'=>$offer_percentage,
+									// 						"payment_status"   	 => $payment_status,
+									// 						"dateadded"     	 => date('Y-m-d H:i:s'),
+									// 						"dateupdated"    => date('Y-m-d H:i:s'),
+									// 				);
+									
+									
+									$arrbooking = array(
+										"booking_status"     	 => "waiting_for_accept",
+									);
+									$this->db->where('loba_service_booking.booking_id',$booking_id);
+									$this->db->update('loba_service_booking',$arrbooking);
+
+									redirect(base_url().'Home/paymentSuccessPage/'.base64_encode($intOrderId));
+					}
+			}
+		
+		// echo "<pre>";
+		// print_r($data);
+		// exit;
+		$data['user_id']=$user_id;
+		// $this->load->view('front/front_header');
+		// $this->load->view('front/orderPlace',$data);
+		// $this->load->view('front/front_footer');
+	}
+
+	//code for payment success page
+	public function paymentSuccessPage($intOrderId=0)
+	{
+		date_default_timezone_set(DEFAULT_TIME_ZONE);	
+		$sessiondata=$this->session->userdata('logged_in');
+		$intOrderId=base64_decode($intOrderId);
+		$user_id=0;
+		if(isset($sessiondata))
+		{
+			$user_id=$sessiondata['user_id']; 
+		}
+		
+		$data['userData']=$userData=$this->Home_model->getUserProfileInfo($user_id,1);
+		$data['orderData']=$orderData=$this->Home_model->getOrderData($intOrderId,1);
+
+		$data['user_id']=$user_id;
+		$this->load->view('front/front_header');
+		$this->load->view('front/payment_success_page',$data);
 		$this->load->view('front/front_footer');
 	}
 }
