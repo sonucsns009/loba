@@ -5,6 +5,7 @@ class Doctors extends CI_Controller {
 	{
 		  parent::__construct();
 		  $this->load->model('adminmodel/Doctor_model');
+		  $this->load->model('adminmodel/User_model');
 		  $this->load->model('Common_Model');
 		// $this->load->library("pagination");
 		//print_r($this->session->userdata('logged_in'));
@@ -47,6 +48,7 @@ class Doctors extends CI_Controller {
 				$from_organization   =$this->input->post('from_organization');
 				$charges_per_hourse  =$this->input->post('charges_per_hourse');
 				$charges_per_visit	 =$this->input->post('charges_per_visit');
+				$specialization	 =$this->input->post('specialization');
 
                 // CH
 				$full_name_ch           =$this->input->post('full_name_ch');
@@ -56,12 +58,23 @@ class Doctors extends CI_Controller {
 				$from_organization_ch   =$this->input->post('from_organization_ch');
 				$charges_per_hourse_ch  =$this->input->post('charges_per_hourse_ch');
 				$charges_per_visit_ch	=$this->input->post('charges_per_visit_ch');
+				$specialization_ch	=$this->input->post('specialization_ch');
 				
 				// check already service exists
 				$user_exists = $this->Doctor_model->check_userexists($mobile);
 
 				if($user_exists == 0)
 				{
+					 //Image Upload Code 
+					 if(count($_FILES) > 0) 
+					 {
+						 $ImageName = "doctor_image";
+						 $target_dir = "uploads/doctor_images/";
+						 $doctor_image= $this->Common_Model->ImageUpload($ImageName,$target_dir);
+						 $target_dir = "uploads/user/profile_photo/";
+						 $profile_pic= $this->Common_Model->ImageUpload($ImageName,$target_dir);
+					 }
+
 					$input_data=array(
                         'full_name'=>$full_name,
                         'email'=>$email,
@@ -69,6 +82,7 @@ class Doctors extends CI_Controller {
                         'address'=>$address,
                         'user_type'=>'Service Provider',
                         'service_type'=>'Doctor',
+                        'profile_pic'=>$profile_pic,
                         'status_flag'=>'Active',
                         'added_date'=>date('Y-m-d H:i:s'),
                         'edit_date'=>date('Y-m-d H:i:s')
@@ -76,8 +90,10 @@ class Doctors extends CI_Controller {
 					$user_id=$this->Common_Model->insert_data('users',$input_data);
 					if($user_id > 0)
 					{
+						$loba_id="LOBA-D".$this->Common_Model->randomCode();
 						$input_data=array(
 							'user_id'=>$user_id,
+							'loba_id'=>$loba_id,
 							'doctor_full_name'=>$full_name,
 							'email'=>$email,
 							'mobile_no'=>$mobile,
@@ -85,12 +101,24 @@ class Doctors extends CI_Controller {
 							'from_organization'=>$from_organization,
 							'charges_per_hourse'=>$charges_per_hourse,
 							'charges_per_visit'=>$charges_per_visit,
-							'password'=>$password,
+							'doctor_image'=>$doctor_image,
+							'specialization'=>$specialization,
 							'added_date'=>date('Y-m-d H:i:s'),
 							'updated_date'=>date('Y-m-d H:i:s')
 						);
 
 						$doctor_id=$this->Common_Model->insert_data('doctors',$input_data);
+
+						$arrData=array(
+							'user_id'=> $user_id,
+							'service_id'=>'3'
+						);
+						$serviceexist= $this->User_model->checkserviceexist(3,$user_id);
+						if($serviceexist<=0)
+						{
+							$this->Common_Model->insert_data('user_services',$arrData);
+							//echo $this->db->last_query();
+						}
 							//echo $this->db->last_query();//exit;
 						if($doctor_id > 0)
 						{
@@ -99,10 +127,11 @@ class Doctors extends CI_Controller {
 								$input_data_ch=array(
 									'doctor_id'=>$doctor_id,
 									'doctor_full_name_ch'=>$full_name_ch,
-									'address_ch'=>$address_ch,
-									'from_organization_ch'=>$from_organization_ch,
-									'charges_per_hourse_ch'=>$charges_per_hourse_ch,
-									'charges_per_visit_ch'=>$charges_per_visit_ch,
+									'address'=>$address_ch,
+									'from_organization'=>$from_organization_ch,
+									'charges_per_hourse'=>$charges_per_hourse_ch,
+									'charges_per_visit'=>$charges_per_visit_ch,
+									'specialization'=>$specialization_ch,
 									'added_date'=>date('Y-m-d H:i:s'),
 									'updated_date'=>date('Y-m-d H:i:s')
 								);
@@ -151,9 +180,12 @@ class Doctors extends CI_Controller {
 		{
 			$data['doctorInfo']=$doctorInfo=$this->Doctor_model->getDoctorDetails($doctor_id,1);
 			$data['doctorInfo_ch']=$doctorInfo=$this->Doctor_model->getDoctorDetails_ch($doctor_id,1);
+			
+
 			if(isset($_POST['btn_update_doctor']))
 			{
 				$doctor=$this->Doctor_model->getDoctorDetails($doctor_id,1);
+				$user=$this->User_model->getServiceproviderDetails($doctor[0]['user_id'],1); 
 				//print_r($_POST);
 				$this->form_validation->set_rules('full_name','Full Name','required');
 			    $this->form_validation->set_rules('full_name_ch','Full Name','required');
@@ -167,6 +199,7 @@ class Doctors extends CI_Controller {
                     $from_organization   =$this->input->post('from_organization');
                     $charges_per_hourse  =$this->input->post('charges_per_hourse');
                     $charges_per_visit	 =$this->input->post('charges_per_visit');
+					$specialization	 =$this->input->post('specialization');
 
                     // CH
                     $full_name_ch           =$this->input->post('full_name_ch');
@@ -174,17 +207,25 @@ class Doctors extends CI_Controller {
                     $from_organization_ch   =$this->input->post('from_organization_ch');
                     $charges_per_hourse_ch  =$this->input->post('charges_per_hourse_ch');
                     $charges_per_visit_ch	=$this->input->post('charges_per_visit_ch');
-                    $password	            =$this->input->post('password');
-					
-					if($password!="")
+					$specialization_ch	 =$this->input->post('specialization_ch');
+
+					if($_FILES['doctor_image']['name']!="")
 					{
-						$password=md5($password);
+						if(count($_FILES) > 0) 
+						{
+							$ImageName = "doctor_image";
+							$target_dir = "uploads/doctor_images/";
+							$doctor_image= $this->Common_Model->ImageUpload($ImageName,$target_dir);
+							$target_dir = "uploads/user/profile_photo/";
+							$profile_pic= $this->Common_Model->ImageUpload($ImageName,$target_dir);
+						}
 					}
 					else
 					{
-						$password=$doctor[0]['password'];
+						$doctor_image=$doctor[0]['doctor_image'];
+						$profile_pic=$user[0]['profile_pic'];
 					}
-
+					
 					$input_data=array(
                         'full_name'=>$full_name,
                         'email'=>$email,
@@ -192,6 +233,7 @@ class Doctors extends CI_Controller {
                         'address'=>$address,
                         'user_type'=>'Service Provider',
                         'service_type'=>'Doctor',
+                        'profile_pic'=>$profile_pic,
                         'status_flag'=>'Active',
                         'edit_date'=>date('Y-m-d H:i:s')
 					);
@@ -202,10 +244,11 @@ class Doctors extends CI_Controller {
                         'email'=>$email,
                         'mobile_no'=>$mobile,
                         'address'=>$address,
+                        'specialization'=>$specialization,
                         'from_organization'=>$from_organization,
                         'charges_per_hourse'=>$charges_per_hourse,
                         'charges_per_visit'=>$charges_per_visit,
-                        'password'=>$password,
+                        'doctor_image'=>$doctor_image,
                         'added_date'=>date('Y-m-d H:i:s'),
                         'updated_date'=>date('Y-m-d H:i:s')
 					);
@@ -219,10 +262,11 @@ class Doctors extends CI_Controller {
 								$input_data_ch=array(
                                     'doctor_id'=>$doctor_id,
                                     'doctor_full_name_ch'=>$full_name_ch,
-                                    'address_ch'=>$address_ch,
-                                    'from_organization_ch'=>$from_organization_ch,
-                                    'charges_per_hourse_ch'=>$charges_per_hourse_ch,
-                                    'charges_per_visit_ch'=>$charges_per_visit_ch,
+                                    'address'=>$address_ch,
+									'specialization'=>$specialization_ch,
+                                    'from_organization'=>$from_organization_ch,
+                                    'charges_per_hourse'=>$charges_per_hourse_ch,
+                                    'charges_per_visit'=>$charges_per_visit_ch,
                                     'added_date'=>date('Y-m-d H:i:s'),
                                     'updated_date'=>date('Y-m-d H:i:s')
                                 );

@@ -53,6 +53,18 @@
 
 											<div class="form-group row">
 											  	<div class="col-sm-6">
+	                                                <label  ><span>*</span> Doctor Image</label>
+	                                                <input class="form-control" id="doctor_image" type="file" required="" name="doctor_image" />
+													<span style="color:red">Note:Upload only jpg|png|bmp|jpeg</span><br/>
+													<div class="err_msg" id="err_doctor_image"></div>
+												</div>
+												<div class="col-sm-6">
+	                                                
+												</div>
+                                            </div>
+
+											<div class="form-group row">
+											  	<div class="col-sm-6">
 	                                                <label for="email" ><span>*</span> Email</label>
 	                                                <input class="form-control" id="email" type="text" required="" name="email" placeholder="Enter service title">
 													<div class="err_msg" id="err_email"></div>
@@ -83,6 +95,20 @@
 	                                                <label><span>*</span> Address (Chinese)</label>
 	                                               <textarea class="form-control" name="address_ch" id="address_ch" rows="4" placeholder="地址"></textarea>
 													<div class="err_msg" id="err_address_ch"></div>
+												</div>
+                                            </div>
+
+											<div class="form-group row">
+											  	<div class="col-sm-6">
+	                                                <label  ><span>*</span> Specialization </label>
+	                                                <textarea class="form-control" name="specialization" id="specialization" rows="3" placeholder="Ex. Cardiologists,Dermatologists"></textarea>
+													<small style="color:red">Enter comma (,) seprate specialization</small>
+													<div class="err_msg" id="err_address"></div>
+												</div>
+												<div class="col-sm-6">
+	                                                <label><span>*</span> Specialization (Chinese)</label>
+	                                               <textarea class="form-control" name="specialization_ch" id="specialization_ch" rows="3" placeholder="專業化"></textarea>
+													<div class="err_msg" id="err_specialization_ch"></div>
 												</div>
                                             </div>
 
@@ -122,7 +148,6 @@
 													<div class="err_msg" id="err_charges_per_visit_ch"></div>
 												</div>
                                             </div>
-											
 											
                                     </div>
 									

@@ -22,40 +22,56 @@
                                        
 									   		<div class="form-group row">
 											  
-											  	<div class="col-sm-6">
-
-													<div class="form-group">
+											  	<div class="col-sm-2">
+												   
+                                                    <?php
+                                                        $str_images=$str_images1='';										
+                                                        if($doctorInfo[0]['doctor_image']!="")
+                                                        {
+                                                            $str_images='<img src="'.base_url().'uploads/doctor_images/'.$doctorInfo[0]['doctor_image'].'" style="width:110px;height:110px">';
+                                                        }
+                                                        if($str_images!="") 
+                                                        {
+                                                        echo $str_images;
+                                                        } else { ?>
+                                                            <img src="<?php echo base_url();?>template/admin/assets/images/lookbook.jpg" alt="No image Found"style="width:110px;height:110px" />
+                                                        <?php } 
+                                                        ?>
+												</div>
+													
+													<div class="col-sm-5">
+														<label for="services_title" > Doctor Id </label><br>
+														<?php echo $doctorInfo[0]['loba_id'];?> 
+														<br><br>
 														<label for="services_title" > Doctor Name </label><br>
 														<?php echo $doctorInfo[0]['doctor_full_name'];?> / <?php echo $doctorInfo_ch[0]['doctor_full_name_ch'];?>
+														<br><br>
+														<label>Mobile</label><br>
+														<?php echo $doctorInfo[0]['mobile_no'];?>	
+														<br><br>
+														<label>From Organization</label><br>
+														<?php echo $doctorInfo[0]['from_organization'];?> / <?php echo $doctorInfo_ch[0]['from_organization'];?>
+														<br><br>
+														<label>Charges per Visit</label><br>
+														<?php echo $doctorInfo[0]['charges_per_visit'];?> / <?php echo $doctorInfo_ch[0]['charges_per_visit'];?>
+														
 													</div>
-
-													<div class="form-group">
+													
+													<div class="col-sm-5">
 														<label>Email</label><br>
 														<?php echo $doctorInfo[0]['email'];?> 
-													</div>
-
-													<div class="form-group">
-														<label>Mobile</label><br>
-														<?php echo $doctorInfo[0]['mobile_no'];?> 
-													</div>
-													<div class="form-group">
+														<br><br>
 														<label>Address</label><br>
-														<?php echo $doctorInfo[0]['address'];?> / <?php echo $doctorInfo_ch[0]['address_ch'];?>
-													</div>
-													<div class="form-group">
-														<label>From Organization</label><br>
-														<?php echo $doctorInfo[0]['from_organization'];?> / <?php echo $doctorInfo_ch[0]['from_organization_ch'];?>
-													</div>
-													<div class="form-group">
+														<?php echo $doctorInfo[0]['address'];?> / <?php echo $doctorInfo_ch[0]['address'];?>
+														<br><br>
 														<label> Charges per Hours</label><br>
-														<?php echo $doctorInfo[0]['charges_per_hourse'];?> / <?php echo $doctorInfo_ch[0]['charges_per_hourse_ch'];?>
-													</div>
-													<div class="form-group">
-														<label>Charges per Visit</label><br>
-														<?php echo $doctorInfo[0]['charges_per_visit'];?> / <?php echo $doctorInfo_ch[0]['charges_per_visit_ch'];?>
-													</div>
-												</div>
-												
+														<?php echo $doctorInfo[0]['charges_per_hourse'];?> / <?php echo $doctorInfo_ch[0]['charges_per_hourse'];?>
+														<br><br>
+														<label>Specialization</label><br>
+														<?php echo $doctorInfo[0]['specialization'];?> / <?php echo $doctorInfo_ch[0]['specialization'];?>
+													</div> 
+													 
+													 
 										</div>
                                     </div>
                                 </div>

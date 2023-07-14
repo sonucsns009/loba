@@ -40,20 +40,42 @@
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<label for="services_title" ><span>*</span> Full Name</label>
-											<input class="form-control" id="full_name" type="text" required="" name="full_name" value="<?php echo $nurseInfo[0]['nurse_full_name'] ?>" placeholder="Enter service title">
+											<input class="form-control" id="full_name" type="text" required="" name="full_name" value="<?php echo $nurseInfo[0]['nurse_full_name'] ?>" placeholder="Enter Nurse Full Name">
 											<div class="err_msg" id="err_full_name"></div>
 										</div>
 										<div class="col-sm-6">
 											<label for="services_title_ch" ><span>*</span> Full Name (Chinese)</label>
-											<input class="form-control" id="full_name_ch" type="text" required="" name="full_name_ch" value="<?php echo $nurseInfo_ch[0]['nurse_full_name_ch'] ?>" placeholder="全名">
+											<input class="form-control" id="full_name_ch" type="text" required="" name="full_name_ch" value="<?php echo $nurseInfo_ch[0]['nurse_full_name'] ?>" placeholder="全名">
 											<div class="err_msg" id="err_full_name_ch"></div>
 										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-3">
+											<label  ><span>*</span> Nurse Image</label>
+											<input class="form-control" id="nurse_image" type="file" name="nurse_image" />
+											<div class="err_msg" id="err_nurse_image"></div>
+										</div>
+										<div class="col-sm-3">
+											<?php
+											$str_images=$str_images1='';										
+											if($nurseInfo[0]['nurse_image']!="")
+											{
+												$str_images='<img src="'.base_url().'uploads/nurse_images/'.$nurseInfo[0]['nurse_image'].'" style="width:110px;height:110px">';
+											}
+												if($str_images!="") 
+												{
+												echo $str_images;
+												} else { ?>
+												<img src="<?php echo base_url();?>template/admin/assets/images/lookbook.jpg" alt="No image Found"style="width:110px;height:110px" />
+											<?php } 
+											?>
+											</div>
 									</div>
 
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<label for="email" ><span>*</span> Email</label>
-											<input class="form-control" id="email" type="text" required="" name="email" value="<?php echo $nurseInfo[0]['email'] ?>" placeholder="Enter service title">
+											<input class="form-control" id="email" type="text" required="" name="email" value="<?php echo $nurseInfo[0]['email'] ?>" placeholder="Enter Email">
 											<div class="err_msg" id="err_email"></div>
 										</div>
 										<div class="col-sm-6">
@@ -64,7 +86,7 @@
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<label for="mobile" ><span>*</span> Mobile No</label>
-											<input class="form-control" id="mobile" type="text" required="" name="mobile" value="<?php echo $nurseInfo[0]['mobile_no'] ?>" placeholder="Enter service title">
+											<input class="form-control" id="mobile" type="text" required="" name="mobile" value="<?php echo $nurseInfo[0]['mobile_no'] ?>" placeholder="Enter Mobile Number">
 											<div class="err_msg" id="err_mobile"></div>
 										</div>
 										<div class="col-sm-6">
@@ -75,12 +97,12 @@
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<label  ><span>*</span> Address</label>
-											<textarea class="form-control" name="address" id="address" rows="4" placeholder="Enter Description"><?php echo $nurseInfo[0]['address'] ?></textarea>
+											<textarea class="form-control" name="address" id="address" rows="4" placeholder="Enter Address"><?php echo $nurseInfo[0]['address'] ?></textarea>
 											<div class="err_msg" id="err_address"></div>
 										</div>
 										<div class="col-sm-6">
 											<label><span>*</span> Address (Chinese)</label>
-											<textarea class="form-control" name="address_ch" id="address_ch" rows="4" placeholder="地址"><?php echo $nurseInfo_ch[0]['address_ch'] ?></textarea>
+											<textarea class="form-control" name="address_ch" id="address_ch" rows="4" placeholder="地址"><?php echo $nurseInfo_ch[0]['address'] ?></textarea>
 											<div class="err_msg" id="err_address_ch"></div>
 										</div>
 									</div>
@@ -93,7 +115,7 @@
 										</div>
 										<div class="col-sm-6">
 											<label for="from_organization_ch" ><span>*</span> From Organization (Chinese)</label>
-											<input class="form-control" id="from_organization_ch" type="text" required="" name="from_organization_ch" value="<?php echo $nurseInfo_ch[0]['from_organization_ch'] ?>" placeholder="来自组织">
+											<input class="form-control" id="from_organization_ch" type="text" required="" name="from_organization_ch" value="<?php echo $nurseInfo_ch[0]['from_organization'] ?>" placeholder="来自组织">
 											<div class="err_msg" id="err_from_organization_ch"></div>
 										</div>
 									</div>
@@ -105,7 +127,7 @@
 										</div>
 										<div class="col-sm-6">
 											<label for="charges_per_hourse_ch" ><span>*</span>Charges per Hours (Chinese)</label>
-											<input class="form-control" id="charges_per_hourse_ch" type="text" required="" name="charges_per_hourse_ch" value="<?php echo $nurseInfo_ch[0]['charges_per_hourse_ch'] ?>" placeholder="每小时收费">
+											<input class="form-control" id="charges_per_hourse_ch" type="text" required="" name="charges_per_hourse_ch" value="<?php echo $nurseInfo_ch[0]['charges_per_hourse'] ?>" placeholder="每小时收费">
 											<div class="err_msg" id="err_charges_per_hourse_ch"></div>
 										</div>
 									</div>
@@ -117,20 +139,11 @@
 										</div>
 										<div class="col-sm-6">
 											<label for="charges_per_visit_ch" ><span>*</span>Charges per Visit (Chinese)</label>
-											<input class="form-control" id="charges_per_visit_ch" type="text" required="" name="charges_per_visit_ch" value="<?php echo $nurseInfo_ch[0]['charges_per_visit_ch'] ?>" placeholder="每次访问费用">
+											<input class="form-control" id="charges_per_visit_ch" type="text" required="" name="charges_per_visit_ch" value="<?php echo $nurseInfo_ch[0]['charges_per_visit'] ?>" placeholder="每次访问费用">
 											<div class="err_msg" id="err_charges_per_visit_ch"></div>
 										</div>
 									</div>
-									<!-- <div class="form-group row">
-										<div class="col-sm-6">
-											<label for="from_organization" > Password</label>
-											<input class="form-control" type="password" id="password1" name="password" placeholder="Enter Password">
-											<div class="err_msg" id="err_password1"></div>
-										</div>
-										<div class="col-sm-3">
-											
-										</div>
-									</div> -->
+									
 							</div>
 						</div>
 						<div class="pull-right">

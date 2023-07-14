@@ -41,7 +41,7 @@
 									   		<div class="form-group row">
 											  	<div class="col-sm-6">
 	                                                <label for="services_title" ><span>*</span> Full Name</label>
-	                                                <input class="form-control" id="full_name" type="text" required="" name="full_name" placeholder="Enter service title">
+	                                                <input class="form-control" id="full_name" type="text" required="" name="full_name" placeholder="Enter Nurse Full name">
 													<div class="err_msg" id="err_full_name"></div>
 												</div>
 												<div class="col-sm-6">
@@ -50,11 +50,21 @@
 													<div class="err_msg" id="err_full_name_ch"></div>
 												</div>
                                             </div>
-
+											<div class="form-group row">
+											  	<div class="col-sm-6">
+	                                                <label  ><span>*</span> Nurse Image</label>
+	                                                <input class="form-control" id="nurse_image" type="file" required="" name="nurse_image" />
+													<span style="color:red">Note:Upload only jpg|png|bmp|jpeg</span><br/>
+													<div class="err_msg" id="err_nurse_image"></div>
+												</div>
+												<div class="col-sm-6">
+	                                                
+												</div>
+                                            </div>
 											<div class="form-group row">
 											  	<div class="col-sm-6">
 	                                                <label for="email" ><span>*</span> Email</label>
-	                                                <input class="form-control" id="email" type="text" required="" name="email" placeholder="Enter service title">
+	                                                <input class="form-control" id="email" type="text" required="" name="email" placeholder="Enter Email">
 													<div class="err_msg" id="err_email"></div>
 												</div>
 												<div class="col-sm-6">
@@ -65,7 +75,7 @@
 											<div class="form-group row">
 											  	<div class="col-sm-6">
 	                                                <label for="mobile" ><span>*</span> Mobile No</label>
-	                                                <input class="form-control" id="mobile" type="text" required="" name="mobile" placeholder="Enter service title">
+	                                                <input class="form-control" id="mobile" type="text" required="" name="mobile" placeholder="Enter Mobile Number">
 													<div class="err_msg" id="err_mobile"></div>
 												</div>
 												<div class="col-sm-6">
@@ -76,7 +86,7 @@
 											<div class="form-group row">
 											  	<div class="col-sm-6">
 	                                                <label  ><span>*</span> Address</label>
-	                                                <textarea class="form-control" name="address" id="address" rows="4" placeholder="Enter Description"></textarea>
+	                                                <textarea class="form-control" name="address" id="address" rows="4" placeholder="Enter Address"></textarea>
 													<div class="err_msg" id="err_address"></div>
 												</div>
 												<div class="col-sm-6">
@@ -122,16 +132,7 @@
 													<div class="err_msg" id="err_charges_per_visit_ch"></div>
 												</div>
                                             </div>
-											<!-- <div class="form-group row">
-											  	<div class="col-sm-6">
-	                                                <label for="from_organization" > <span>*</span> Password</label>
-													<input class="form-control" type="password" required="" id="password" name="password" placeholder="Enter Password">
-													<div class="err_msg" id="err_password"></div>
-												</div>
-												<div class="col-sm-3">
-													
-												</div>
-                                            </div> -->
+											
                                     </div>
 									
 									

@@ -5,6 +5,7 @@ class Nurse extends CI_Controller {
 	{
 		  parent::__construct();
 		  $this->load->model('adminmodel/Nurse_model');
+		  $this->load->model('adminmodel/User_model');
 		  $this->load->model('Common_Model');
 		// $this->load->library("pagination");
 		//  if(! $this->session->userdata('logged_in'))
@@ -62,6 +63,16 @@ class Nurse extends CI_Controller {
 
 				if($user_exists == 0)
 				{
+					 //Image Upload Code 
+					 if(count($_FILES) > 0) 
+					 {
+						 $ImageName = "nurse_image";
+						 $target_dir = "uploads/nurse_images/";
+						 $nurse_image= $this->Common_Model->ImageUpload($ImageName,$target_dir);
+						 $target_dir = "uploads/user/profile_photo/";
+						 $profile_pic= $this->Common_Model->ImageUpload($ImageName,$target_dir);
+					 }
+
 					$input_data=array(
                         'full_name'=>$full_name,
                         'email'=>$email,
@@ -69,6 +80,7 @@ class Nurse extends CI_Controller {
                         'address'=>$address,
                         'user_type'=>'Service Provider',
                         'service_type'=>'Nurse',
+                        'profile_pic'=>$profile_pic,
                         'status_flag'=>'Active',
                         'added_date'=>date('Y-m-d H:i:s'),
                         'edit_date'=>date('Y-m-d H:i:s')
@@ -76,16 +88,18 @@ class Nurse extends CI_Controller {
 					$user_id=$this->Common_Model->insert_data('users',$input_data);
 					if($user_id > 0)
 					{
+						$loba_id="LOBA-N".$this->Common_Model->randomCode();
 						$input_data=array(
 							'user_id'=>$user_id,
+							'loba_id'=>$loba_id,
 							'nurse_full_name'=>$full_name,
 							'email'=>$email,
 							'mobile_no'=>$mobile,
 							'address'=>$address,
+							'nurse_image'=>$nurse_image,
 							'from_organization'=>$from_organization,
 							'charges_per_hourse'=>$charges_per_hourse,
 							'charges_per_visit'=>$charges_per_visit,
-							'password'=>$password,
 							'added_date'=>date('Y-m-d H:i:s'),
 							'updated_date'=>date('Y-m-d H:i:s')
 						);
@@ -98,11 +112,11 @@ class Nurse extends CI_Controller {
 							{
 								$input_data_ch=array(
 									'nurse_id'=>$nurse_id,
-									'nurse_full_name_ch'=>$full_name_ch,
-									'address_ch'=>$address_ch,
-									'from_organization_ch'=>$from_organization_ch,
-									'charges_per_hourse_ch'=>$charges_per_hourse_ch,
-									'charges_per_visit_ch'=>$charges_per_visit_ch,
+									'nurse_full_name'=>$full_name_ch,
+									'address'=>$address_ch,
+									'from_organization'=>$from_organization_ch,
+									'charges_per_hourse'=>$charges_per_hourse_ch,
+									'charges_per_visit'=>$charges_per_visit_ch,
 									'added_date'=>date('Y-m-d H:i:s'),
 									'updated_date'=>date('Y-m-d H:i:s')
 								);
@@ -150,6 +164,7 @@ class Nurse extends CI_Controller {
 		{
 			
 			$nurse=$this->Nurse_model->getNurseDetails($nurse_id,1);
+			$user=$this->User_model->getServiceproviderDetails($nurse[0]['user_id'],1); 
 
 			$data['nurseInfo']=$nurseInfo=$this->Nurse_model->getNurseDetails($nurse_id,1);
 			$data['nurseInfo_ch']=$nurseInfo=$this->Nurse_model->getNurseDetails_ch($nurse_id,1);
@@ -175,20 +190,29 @@ class Nurse extends CI_Controller {
                     $from_organization_ch   =$this->input->post('from_organization_ch');
                     $charges_per_hourse_ch  =$this->input->post('charges_per_hourse_ch');
                     $charges_per_visit_ch	=$this->input->post('charges_per_visit_ch');
-					// $password				=$this->input->post('password');
-					// if($password!="")
-					// {
-					// 	$password=md5($password);	
-					// }
-					// else
-					// {
-					// 	$password=$nurse[0]['password'];
-					// }
+
+					if($_FILES['nurse_image']['name']!="")
+					{
+						if(count($_FILES) > 0) 
+						{
+							$ImageName = "nurse_image";
+							$target_dir = "uploads/nurse_images/";
+							$nurse_image= $this->Common_Model->ImageUpload($ImageName,$target_dir);
+							$target_dir = "uploads/user/profile_photo/";
+							$profile_pic= $this->Common_Model->ImageUpload($ImageName,$target_dir);
+						}
+					}
+					else
+					{
+						$nurse_image=$nurse[0]['nurse_image'];
+						$profile_pic=$user[0]['profile_pic'];
+					}
 					$input_data=array(
                         'full_name'=>$full_name,
                         'email'=>$email,
                         'mobile'=>$mobile,
                         'address'=>$address,
+                        'profile_pic'=>$profile_pic,
                         'user_type'=>'Service Provider',
                         'service_type'=>'Nurse',
                         'status_flag'=>'Active',
@@ -201,10 +225,10 @@ class Nurse extends CI_Controller {
                         'email'=>$email,
                         'mobile_no'=>$mobile,
                         'address'=>$address,
+                        'nurse_image'=>$nurse_image,
                         'from_organization'=>$from_organization,
                         'charges_per_hourse'=>$charges_per_hourse,
                         'charges_per_visit'=>$charges_per_visit,
-                        'password'=>$password,
                         'added_date'=>date('Y-m-d H:i:s'),
                         'updated_date'=>date('Y-m-d H:i:s')
 					);
@@ -217,11 +241,11 @@ class Nurse extends CI_Controller {
 							{
 								$input_data_ch=array(
                                     'nurse_id'=>$nurse_id,
-                                    'nurse_full_name_ch'=>$full_name_ch,
-                                    'address_ch'=>$address_ch,
-                                    'from_organization_ch'=>$from_organization_ch,
-                                    'charges_per_hourse_ch'=>$charges_per_hourse_ch,
-                                    'charges_per_visit_ch'=>$charges_per_visit_ch,
+                                    'nurse_full_name'=>$full_name_ch,
+                                    'address'=>$address_ch,
+                                    'from_organization'=>$from_organization_ch,
+                                    'charges_per_hourse'=>$charges_per_hourse_ch,
+                                    'charges_per_visit'=>$charges_per_visit_ch,
                                     'added_date'=>date('Y-m-d H:i:s'),
                                     'updated_date'=>date('Y-m-d H:i:s')
                                 );

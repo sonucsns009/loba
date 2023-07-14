@@ -23,9 +23,9 @@ Class Nurse_model extends CI_Model {
 	
 	public function getAllNurse()
 	{
-		$this->db->select('n.*,ch.*');
+		$this->db->select('n.*');
 		$this->db->from(TBPREFIX.'nurse as n');
-		$this->db->join(TBPREFIX.'nurse_ch as ch','ch.nurse_id = n.nurse_id','left');
+		//$this->db->join(TBPREFIX.'nurse_ch as ch','ch.nurse_id = n.nurse_id','left');
 		$res=$this->db->get();
 		return $tsr=$res->result_array();
 	}

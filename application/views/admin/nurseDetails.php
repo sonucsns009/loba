@@ -26,7 +26,7 @@
 
 													<div class="form-group">
 														<label for="services_title" > Nurse Name </label><br>
-														<?php echo $nurseInfo[0]['nurse_full_name'];?> / <?php echo $nurseInfo_ch[0]['nurse_full_name_ch'];?>
+														<?php echo $nurseInfo[0]['nurse_full_name'];?> / <?php echo $nurseInfo_ch[0]['nurse_full_name'];?>
 													</div>
 
 													<div class="form-group">
@@ -40,19 +40,19 @@
 													</div>
 													<div class="form-group">
 														<label>Address</label><br>
-														<?php echo $nurseInfo[0]['address'];?> / <?php echo $nurseInfo_ch[0]['address_ch'];?>
+														<?php echo $nurseInfo[0]['address'];?> / <?php echo $nurseInfo_ch[0]['address'];?>
 													</div>
 													<div class="form-group">
 														<label>From Organization</label><br>
-														<?php echo $nurseInfo[0]['from_organization'];?> / <?php echo $nurseInfo_ch[0]['from_organization_ch'];?>
+														<?php echo $nurseInfo[0]['from_organization'];?> / <?php echo $nurseInfo_ch[0]['from_organization'];?>
 													</div>
 													<div class="form-group">
 														<label> Charges per Hours</label><br>
-														<?php echo $nurseInfo[0]['charges_per_hourse'];?> / <?php echo $nurseInfo_ch[0]['charges_per_hourse_ch'];?>
+														<?php echo $nurseInfo[0]['charges_per_hourse'];?> / <?php echo $nurseInfo_ch[0]['charges_per_hourse'];?>
 													</div>
 													<div class="form-group">
 														<label>Charges per Visit</label><br>
-														<?php echo $nurseInfo[0]['charges_per_visit'];?> / <?php echo $nurseInfo_ch[0]['charges_per_visit_ch'];?>
+														<?php echo $nurseInfo[0]['charges_per_visit'];?> / <?php echo $nurseInfo_ch[0]['charges_per_visit'];?>
 													</div>
 												</div>
 												

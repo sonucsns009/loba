@@ -64,10 +64,9 @@
                                     <tr>												
                                         <th>Sr.No</th>
                                         <th>Name / CH</th>
-                                        <th>Email / CH</th>
+                                        <th>Email</th>
                                         <th>Mobile</th>
                                         <th>Address / CH</th>
-                                        <th>From Organization</th>
                                         <th>Charges/Hrs</th>
                                         <th>Charges/Visit</th>
                                         <th>Status</th>
@@ -80,18 +79,18 @@
                                 $i=1; 											
                                     foreach($nurseList as $nurse)
                                     {			
-                                        //print_r($nurse);
                                         
+                                        $nurse_ch=$this->Nurse_model->getNurseDetails_ch($nurse['nurse_id'],1) ;
+                                        //print_r($nurse_ch);
                                         ?>
                                         <tr>
                                             <td><?php echo $i;?></td>
-                                            <td><?php echo ucfirst($nurse['nurse_full_name']);?> / <?php echo ucfirst($nurse['nurse_full_name_ch']);?></td>
+                                            <td><?php echo ucfirst($nurse['nurse_full_name']);?> / <?php echo ucfirst($nurse_ch[0]['nurse_full_name']);?></td>
                                             <td><?php echo $nurse['email'];?> </td>
                                             <td><?php echo $nurse['mobile_no'];?></td>
-                                            <td><?php echo $nurse['address'];?> / <?php echo $nurse['address_ch'];?></td>
-                                            <td><?php echo $nurse['from_organization'];?> / <?php echo $nurse['from_organization_ch'];?></td>
-                                            <td><?php echo $nurse['charges_per_hourse'];?> / <?php echo $nurse['charges_per_hourse_ch'];?></td>
-                                            <td><?php echo $nurse['charges_per_visit'];?> / <?php echo $nurse['charges_per_visit_ch'];?></td>
+                                            <td><?php echo $nurse['address'];?> / <?php echo $nurse_ch[0]['address'];?></td>
+                                            <td><?php echo $nurse['charges_per_hourse'];?> / <?php echo $nurse['charges_per_hourse'];?></td>
+                                            <td><?php echo $nurse['charges_per_visit'];?> / <?php echo $nurse['charges_per_visit'];?></td>
                                             <?php
 												if($nurse['nurse_status']=='Active'){ $color="style='color:green'";}
 												else if($nurse['nurse_status']=='Delete'){ $color="style='color:red'";}
