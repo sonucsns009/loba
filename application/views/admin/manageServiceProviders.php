@@ -33,7 +33,7 @@
 				</div>	
                 <div class="card-body">
 					
-							<?php if($this->session->flashdata('success')!=""){?>
+						<?php if($this->session->flashdata('success')!=""){?>
 						<div class="alert alert-success">
 							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 							<?php echo $this->session->flashdata('success');?>
@@ -52,6 +52,25 @@
 							<?php echo $this->session->flashdata('error_msg');?>
 						</div>
 						<?php }?>	
+
+						<form name="frm_addslider" class="needs-validation" method="POST" enctype="multipart/form-data">
+							<div class="form-group row">
+								<div class="col-sm-4">
+									<label for="services_title" > Search</label>
+									<input class="form-control" type="text" required="" name="search_name" placeholder="Search by Name" value="<?php if(isset($search_name) && $search_name!="") echo $search_name;?>">
+									<div class="err_msg" id="err_full_name"></div>
+								</div>
+								<div class="col-sm-2">
+									 <br>
+									<input class="btn btn-success"  type="submit" name="btn_search_sp" value="Search">
+ 								</div>
+								 <div class="col-sm-2">
+									 <br>
+									 <a  class="btn btn-primary custom-btn" href="<?php echo base_url();?>backend/Serviceprovider/manageServiceproviders">
+									Clear</a>
+ 								</div>
+							</div>
+						</form>
 						<div class="table-responsive">
 							<div id="basicScenario" class="product-physical"></div>
 							<table class="table table-bordered table-striped mb-0" id="datatable-default">			
@@ -68,6 +87,7 @@
                                         <th>Address / CH</th>
                                         <th>User Type</th>
                                         <th>Status</th>
+                                        <th>Status Change</th>
                                         <th>Action</th>
                                     </tr>											
                                 </thead>											
@@ -92,6 +112,13 @@
 												else if($user['status_flag']=='Inactive'){ $color="style='color:#df9713'";}
                                             ?>
                                             <td <?=$color;?>><?php echo $user['status_flag'];?> </td>
+											<td>
+												<?php if($user['status_flag']!='Active') { ?>
+													<a href="<?php echo base_url();?>backend/Serviceprovider/change_status/<?php echo base64_encode($user['user_id']);?>/<?php echo base64_encode('Active');?>" class="btn-sm btn-success">Active</a>
+													<?php } else { ?>
+													<a href="<?php echo base_url();?>backend/Serviceprovider/change_status/<?php echo base64_encode($user['user_id']);?>/<?php echo base64_encode('Inactive');?>" class="btn-sm btn-danger">Inactive</a>
+												<?php } ?>
+											</td>
                                             <td>
                                                 <a href="<?php echo base_url();?>backend/Serviceprovider/updateServiceprovider/<?php echo base64_encode($user['user_id']);?>"><i data-feather="edit"></i></a>
                                                 <a href="<?php echo base_url();?>backend/Serviceprovider/deleteServiceprovider/<?php echo base64_encode($user['user_id']);?>" class="delete-row" onclick="javascript:return chk_isDeleteComnfirm();"><i data-feather="trash-2"></i></a>

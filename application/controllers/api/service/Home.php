@@ -80,7 +80,7 @@ class Home extends REST_Controller {
 		
 		if($token == TOKEN)
 		{
-			if($sp_lat=="" || $sp_long=="")
+			if($sp_lat=="" || $sp_long=="" || $user_id=="")
 			{
 				$response_array['responsecode'] = "201";
 				$response_array['responsemessage'] = 'Please Provide valid data';
@@ -96,9 +96,29 @@ class Home extends REST_Controller {
 				// $service_ids.=")";
 
 				//$arrBookings=$this->HomeModel->getAllwaitingBookings($service_ids);
-				$arrBookings=$this->HomeModel->getNearByBookings($sp_lat,$sp_long);
+				$user=$this->HomeModel->getUserDetails($user_id);
+					//echo $user->service_type;
+				if($user->service_type=='Service Provider')
+				{
+					$arrBookings=$this->HomeModel->getNearByBookings($user_id,$sp_lat,$sp_long);
+				}
+				else if($user->service_type=='Doctor')
+				{
+					$doctor=$this->HomeModel->getDoctorDetails($user_id);
+					$arrBookings=$this->HomeModel->getDoctorNurseBookings($doctor->doctor_id,'');
+				}
+				else if($user->service_type=='Nurse')
+				{
+					$nurse=$this->HomeModel->getNurseDetails($user_id);
+					$arrBookings=$this->HomeModel->getDoctorNurseBookings('',$nurse->nurse_id);
+				}
+				//echo $this->db->last_query();
 				foreach($arrBookings as $key=>$booking)
 				{
+					if(isset($booking['profile_pic']) && $booking['profile_pic']!="")
+					{
+						$booking['profile_pic']=base_url()."uploads/user/profile_photo/".$booking['profile_pic'];
+					}
 					if($booking['booking_status']=='waiting_for_accept')
 					{
 						$booking['booking_status']="Waiting";
@@ -129,10 +149,12 @@ class Home extends REST_Controller {
 
 	public function change_status_post()
 	{
+		$substatus="";
 		$token 		= $this->input->post("token");
 		$user_id 		= $this->input->post("user_id");
 		$booking_id 		= $this->input->post("booking_id");
 		$status 		= $this->input->post("status");
+		$substatus 		= $this->input->post("substatus");
 		
 		if($token == TOKEN)
 		{
@@ -145,7 +167,8 @@ class Home extends REST_Controller {
 			{
 				$inputData=array(
 					'service_provider_id' => $user_id,
-					'booking_status' => $status
+					'booking_status' => $status,
+					'booking_sub_status' => $substatus
 				);
 				$this->Common_Model->update_data('service_booking','booking_id',$booking_id,$inputData);
 				$bookingDetails=$this->HomeModel->getBookingDetails($booking_id);
@@ -187,11 +210,32 @@ class Home extends REST_Controller {
 						$booking['booking_date']=new DateTime($booking['booking_date']);
 						$booking['booking_date']=$booking['booking_date']->format('M d,Y');
 					}
+					if($booking['booking_status']=='accepted')
+					{
+						$booking['booking_status']="Accepted";
+					}
+					else if($booking['booking_status']=='ongoing')
+					{
+						$booking['booking_status']="Ongoing";
+
+						if($booking['booking_sub_status']="start_journey")
+						{
+							$booking['booking_sub_status']="Start Journey";
+						}
+						else if($booking['booking_sub_status']="reached")
+						{
+							$booking['booking_sub_status']="Reached";
+						}
+						else if($booking['booking_sub_status']="start_service")
+						{
+							$booking['booking_sub_status']="Start Service";
+						}
+					}
 					$arrBookings[$key]=$booking;
 				}
 				
 				$response_array['responsecode'] = "200";
-				$response_array['responsemessage'] = "Waiting Booking List";
+				$response_array['responsemessage'] = "Assigned Booking List";
 				$response_array['data'] = $arrBookings;
 			}
 		}

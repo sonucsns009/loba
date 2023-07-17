@@ -18,7 +18,16 @@ class Serviceprovider extends CI_Controller {
 	public function manageServiceproviders()
 	{
 		$data['title']='Manage Service Providers';
-		$data['userList']=$this->User_model->getAllServiceproviders();
+		$search="";
+		$filter=array();
+		if(isset($_POST['btn_search_sp']))
+		{
+			$search           =$this->input->post('search_name');
+			$filter['search']=$search;
+		}
+		$data['userList']=$this->User_model->getAllServiceproviders($filter);
+		$data['search_name']=$search;
+		//echo $this->db->last_query();
 		$this->load->view('admin/admin_header',$data);
 		$this->load->view('admin/manageServiceProviders',$data);
 		$this->load->view('admin/admin_footer');
@@ -42,10 +51,10 @@ class Serviceprovider extends CI_Controller {
 				$full_name           =$this->input->post('full_name');
 				$email               =$this->input->post('email');
 				$mobile              =$this->input->post('mobile');
-				$alt_mobile          =$this->input->post('alt_mobile');
+				//$alt_mobile          =$this->input->post('alt_mobile');
 				$address             =$this->input->post('address');
 				$gender	             =$this->input->post('gender');
-				$weight	             =$this->input->post('weight');
+				//$weight	             =$this->input->post('weight');
 				$mobility_aid	     =$this->input->post('mobility_aid');
 				$id_proof_no	     =$this->input->post('id_proof_no');
 				$medical_history	 =$this->input->post('medical_history');
@@ -54,18 +63,17 @@ class Serviceprovider extends CI_Controller {
 
                 // CH
 				$full_name_ch        =$this->input->post('full_name_ch');
-				$email_ch            =$this->input->post('email_ch');
-				$mobile_ch           =$this->input->post('mobile_ch');
-				$alt_mobile_ch       =$this->input->post('alt_mobile_ch');
+				//$email_ch            =$this->input->post('email_ch');
+				//$mobile_ch           =$this->input->post('mobile_ch');
+				//$alt_mobile_ch       =$this->input->post('alt_mobile_ch');
  				$address_ch          =$this->input->post('address_ch');
 				$gender_ch           =$this->input->post('gender_ch');
-				$weight_ch	         =$this->input->post('weight_ch');
+				//$weight_ch	         =$this->input->post('weight_ch');
 				$mobility_aid_ch	 =$this->input->post('mobility_aid_ch');
 				$id_proof_no_ch	     =$this->input->post('id_proof_no_ch');
 				$medical_history_ch  =$this->input->post('medical_history_ch');
-                $password            =md5($this->input->post('password'));
                 $service_ids         =$this->input->post('service_ids');
-
+				$id_proof_back=$id_proof_back_ch=$id_proof_front=$profile_pic=$id_proof_front_ch="";
 				// check already service exists
 				$userexists = $this->User_model->check_userexists($mobile);
 				//print_r($_FILES);
@@ -95,13 +103,12 @@ class Serviceprovider extends CI_Controller {
                         'full_name'=>$full_name,
                         'email'=>$email,
                         'mobile'=>$mobile,
-                        'alt_mobile'=>$alt_mobile,
-                        'password'=>$password,
+                       // 'alt_mobile'=>$alt_mobile,
                         'address'=>$address,
                         'user_type'=>$user_type,
                         'service_type'=>'Service Provider',
                         'gender'=>$gender,
-                        'weight'=>$weight,
+                        //'weight'=>$weight,
 						'mobility_aid' => $mobility_aid,
                         'medical_history'=>$medical_history,
                         'id_proof_no'=>$id_proof_no,
@@ -135,12 +142,12 @@ class Serviceprovider extends CI_Controller {
 							$input_data_ch=array(
                                 'user_id'=>$user_id,
 								'full_name'=>$full_name_ch,
-								'email'=>$email_ch,
-								'mobile'=>$mobile_ch,
-								'alt_mobile'=>$alt_mobile_ch,
+								//'email'=>$email_ch,
+								//'mobile'=>$mobile_ch,
+								//'alt_mobile'=>$alt_mobile_ch,
 								'address'=>$address_ch,
 								'gender'=>$gender_ch,
-								'weight'=>$weight_ch,
+								//'weight'=>$weight_ch,
 								'mobility_aid' => $mobility_aid_ch,
 								'medical_history'=>$medical_history_ch,
 								'id_proof_no'=>$id_proof_no_ch,
@@ -171,19 +178,19 @@ class Serviceprovider extends CI_Controller {
 					}
 					else
 					{	   
-						$data['doctorInfo'] = $_POST;
+						$data['userInfo'] = $_POST;
 						$this->session->set_flashdata('error','Error while adding record.');
 					}
 				}
 				else
 				{
-						$data['doctorInfo'] = $_POST;
+						$data['userInfo'] = $_POST;
 						$this->session->set_flashdata('error','User already exists.');		
 				}
 			}
 			else
 			{
-				$data['doctorInfo'] = $_POST;
+				$data['userInfo'] = $_POST;
 				$this->session->set_flashdata('error',$this->form_validation->error_string());
 			}
 		}
@@ -251,12 +258,17 @@ class Serviceprovider extends CI_Controller {
 					$gender_ch           =$this->input->post('gender_ch');
 					$service_ids         =$this->input->post('service_ids');
 
-					
+					$user=$this->User_model->getServiceproviderDetails($user_id,1) ;
+
 					if(isset($_FILES['profile_pic']['name']) && $_FILES['profile_pic']['name'] != '') 
 					{
 						$ImageName = "profile_pic";
 						$target_dir = "uploads/user/profile_photo/";
 						$profile_pic= $this->Common_Model->ImageUpload($ImageName,$target_dir);
+					}
+					else
+					{
+						$profile_pic=$user[0]['profile_pic'];
 					}
 
 					if(isset($_FILES['id_proof_front']['name']) && $_FILES['id_proof_front']['name'] != '') 
@@ -277,10 +289,9 @@ class Serviceprovider extends CI_Controller {
 							'email'=>$email,
 							'mobile'=>$mobile,
 							'alt_mobile'=>$alt_mobile,
-							'password'=>$password,
 							'address'=>$address,
 							'user_type'=>$user_type,
-							//'service_type'=>'Doctor',
+							'service_type'=>'Service Provider',
 							'gender'=>$gender,
 							'profile_pic'=>$profile_pic,
 							'status_flag'=>$status,
@@ -347,6 +358,95 @@ class Serviceprovider extends CI_Controller {
 		$this->load->view('admin/admin_header',$data);
 		$this->load->view('admin/updateServiceprovider',$data);
 		$this->load->view('admin/admin_footer');
+	}
+
+	## Update Service 
+	public function deleteServiceprovider()
+	{
+		$data['title']='Delete Service Provider';
+		
+		$user_id=base64_decode($this->uri->segment(4));
+		if($user_id)
+		{
+			$user=$this->User_model->getServiceproviderDetails($user_id,1);
+			$input_data=array(
+				'status_flag' => 'Delete',
+				'edit_date'=>date('Y-m-d H:i:s'),
+			);
+			$this->Common_Model->update_data('users','user_id',$user_id,$input_data);
+			//	echo $this->db->last_query();exit;
+			if($user[0]['service_type']=='Doctor')
+			{
+				$input_data_ch=array(
+					'doctor_status' => 'Delete',
+					'updated_date'=>date('Y-m-d H:i:s'),
+				);
+				$this->Common_Model->update_data('doctors','user_id',$user_id,$input_data_ch);
+			}
+			if($user[0]['service_type']=='Nurse')
+			{
+				$input_data=array(
+					'nurse_status' => 'Delete',
+					'updated_date'=>date('Y-m-d H:i:s'),
+				);
+				$this->Common_Model->update_data('nurse','user_id',$user_id,$input_data);
+			}
+			
+			//	echo $this->db->last_query();exit;
+		 
+			$this->session->set_flashdata('success','Record delete successfully.');
+			redirect(base_url().'backend/Serviceprovider/manageServiceproviders');	
+		}
+		else
+		{	   
+			$data['doctorInfo'] = $_POST;
+			$this->session->set_flashdata('error','Error while adding record.');
+		}
+	}
+
+	## Update Service 
+	public function change_status()
+	{
+		$data['title']='Change Status';
+		
+		$user_id=base64_decode($this->uri->segment(4));
+		$status=base64_decode($this->uri->segment(5));
+		if($user_id)
+		{
+			$user=$this->User_model->getServiceproviderDetails($user_id,1);
+			$input_data=array(
+				'status_flag' => $status,
+				'edit_date'=>date('Y-m-d H:i:s'),
+			);
+			$this->Common_Model->update_data('users','user_id',$user_id,$input_data);
+			//	echo $this->db->last_query();exit;
+			if($user[0]['service_type']=='Doctor')
+			{
+				$input_data_ch=array(
+					'doctor_status' => $status,
+					'updated_date'=>date('Y-m-d H:i:s'),
+				);
+				$this->Common_Model->update_data('doctors','user_id',$user_id,$input_data_ch);
+			}
+			if($user[0]['service_type']=='Nurse')
+			{
+				$input_data=array(
+					'nurse_status' => $status,
+					'updated_date'=>date('Y-m-d H:i:s'),
+				);
+				$this->Common_Model->update_data('nurse','user_id',$user_id,$input_data);
+			}
+			
+			//	echo $this->db->last_query();exit;
+		 
+			$this->session->set_flashdata('success','Status updated successfully.');
+			redirect(base_url().'backend/Serviceprovider/manageServiceproviders');	
+		}
+		else
+		{	   
+			$data['doctorInfo'] = $_POST;
+			$this->session->set_flashdata('error','Error while adding record.');
+		}
 	}
 }
 
