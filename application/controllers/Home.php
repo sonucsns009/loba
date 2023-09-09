@@ -10,7 +10,7 @@ class Home extends CI_Controller {
 		//   if(!$this->session->userdata('logged_in'))
 		//   {
 		// 	 redirect(base_url().'Home/login');
-		//   }
+		//   }      
 		$cookie_name = 'site_lang';
 		if(!isset($_COOKIE[$cookie_name])) {
 
